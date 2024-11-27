@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./Contents/Home";
 import CreatePost from "./Contents/CreatePost";
 import MyPost from "./Contents/MyPost";
+import Settings from "./Contents/Settings";
 
 const Content = () => {
   return (
@@ -15,6 +16,7 @@ const Content = () => {
           <Route path="/" element={<Home />} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/my-post" element={<MyPost />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
     </div>
