@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
 const CreatePost = () => {
-  const initailize = {
+  const initialize = {
     id: Date.now(),
     title: "",
     category: "",
@@ -11,8 +12,9 @@ const CreatePost = () => {
     created_at: new Date().toISOString(),
   };
   const [imagePreview, setImagePreview] = useState("");
-  const [formValue, setFormvalues] = useState(initailize);
+  const [formValue, setFormvalues] = useState(initialize);
   const [formError, setFormError] = useState({});
+  const [success, setSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,10 +22,15 @@ const CreatePost = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormError(validate(formValue));
-    setFormvalues(initailize);
+    const error = validate(formValue);
+    setFormError(error);
+    console.log(error);
+    if (Object.keys(error).length === 0) {
+      setFormvalues(initialize);
+      setSuccess(true);
+      setImagePreview("");
+    }
   };
-
   const validate = (values) => {
     const errors = {};
     if (!values.title) {
@@ -43,12 +50,17 @@ const CreatePost = () => {
     }
     if (!values.description) {
       errors.description = "Desciption is required.";
-    } else if (values.description.length < 20) {
+    } else if (values.description.length < 30) {
       errors.description = "Desciption is too short.";
     } else if (values.description.length > 400) {
       errors.description = "Desciption is too Long.";
     }
     return errors;
+  };
+  const cancelPost = () => {
+    setImagePreview("");
+    setFormvalues(initialize);
+    setFormError({});
   };
 
   const borderRed = { borderColor: "#dc2626" };
@@ -59,6 +71,27 @@ const CreatePost = () => {
           <h1 className="font-semibold text-3xl text-gray-800">Create Post</h1>
         </div>
       </div>
+      <AnimatePresence>
+        {success && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="w-96 fixed top-7 left-[600px] flex items-center justify-between px-4 py-2 bg-green-50 border-l-8 border-green-500 text-green-700 rounded-lg shadow-md max-w-md mx-auto"
+          >
+            <div className="flex items-center">
+              <i className="bx bx-check-circle text-green-500 text-xl mr-2"></i>
+              <span className="text-sm font-medium">Successfully posted</span>
+            </div>
+            <button
+              onClick={() => setSuccess(false)}
+              className="text-green-700 hover:text-green-900 transition duration-200 active:scale-[0.95]"
+            >
+              <i className="bx bx-x text-2xl"></i>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className="grid grid-cols-3 gap-6">
         <div className="col-span-2 mt-3">
           <form onSubmit={handleSubmit}>
@@ -66,6 +99,11 @@ const CreatePost = () => {
               <label htmlFor="" className="text-sm text-gray-600">
                 Title
               </label>
+              {formError.title && (
+                <span className="ml-5 text-red-600 text-[11px]">
+                  {formError.title}
+                </span>
+              )}
               <input
                 type="text"
                 name="title"
@@ -82,9 +120,14 @@ const CreatePost = () => {
               <label htmlFor="" className="text-sm text-gray-600">
                 Category
               </label>
+              {formError.category && (
+                <span className="ml-5 text-red-600 text-[11px]">
+                  {formError.category}
+                </span>
+              )}
               <select
                 name="category"
-                style={formError.title && borderRed}
+                style={formError.category && borderRed}
                 value={formValue.category}
                 onChange={handleChange}
                 className="border w-full px-5 py-3 rounded-lg focus:outline-blue-600 text-gray-700"
@@ -106,10 +149,15 @@ const CreatePost = () => {
               <label htmlFor="" className="text-sm text-gray-600">
                 Thumbnail
               </label>
+              {formError.thumbnail && (
+                <span className="ml-5 text-red-600 text-[11px]">
+                  {formError.thumbnail}
+                </span>
+              )}
               <input
                 type="text"
                 name="thumbnail"
-                style={formError.title && borderRed}
+                style={formError.thumbnail && borderRed}
                 value={formValue.thumbnail}
                 onChange={(e) => {
                   handleChange(e);
@@ -123,9 +171,14 @@ const CreatePost = () => {
               <label htmlFor="" className="text-sm text-gray-600">
                 Description
               </label>
+              {formError.description && (
+                <span className="ml-5 text-red-600 text-[11px]">
+                  {formError.description}
+                </span>
+              )}
               <textarea
                 name="description"
-                style={formError.title && borderRed}
+                style={formError.description && borderRed}
                 value={formValue.description}
                 onChange={handleChange}
                 className="border w-full px-5 py-3 rounded-lg focus:outline-blue-600 text-gray-700"
@@ -135,6 +188,7 @@ const CreatePost = () => {
             </div>
             <div className="flex gap-3 justify-end items-center mt-1">
               <button
+                onClick={cancelPost}
                 type="reset"
                 className="px-5 py-2 bg-red-600 text-white rounded-lg active:scale-[0.96]"
               >
@@ -142,7 +196,6 @@ const CreatePost = () => {
               </button>
               <button
                 type="submit"
-                onClick={() => console.log(formValue)}
                 className="px-8 py-2 bg-blue-600 text-white rounded-lg active:scale-[0.96]"
               >
                 Post
