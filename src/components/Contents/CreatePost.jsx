@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import Loading from "../Loading";
+import SuccessAlert from "../SuccessAlert";
+import FailAlert from "../FailAlert";
 
 const CreatePost = () => {
   const initialize = {
@@ -14,7 +17,33 @@ const CreatePost = () => {
   const [imagePreview, setImagePreview] = useState("");
   const [formValue, setFormvalues] = useState(initialize);
   const [formError, setFormError] = useState({});
-  const [success, setSuccess] = useState(false);
+  const [alert, setAlert] = useState({ message: "", type: "" });
+  const [loading, setLoading] = useState(false);
+
+  const createPost = async () => {
+    setLoading(true);
+    try {
+      const responce = await fetch("http://localhost:3000/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValue),
+      });
+
+      if (!responce.ok) {
+        throw new Error("Failed to POST data.");
+      }
+
+      setAlert({ message: "Successfully Posted", type: "success" });
+      setFormvalues(initialize);
+      setImagePreview("");
+    } catch (error) {
+      setAlert({ message: "Posting Blog failse.", type: "error" });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,11 +53,8 @@ const CreatePost = () => {
     e.preventDefault();
     const error = validate(formValue);
     setFormError(error);
-    console.log(error);
     if (Object.keys(error).length === 0) {
-      setFormvalues(initialize);
-      setSuccess(true);
-      setImagePreview("");
+      createPost();
     }
   };
   const validate = (values) => {
@@ -52,7 +78,7 @@ const CreatePost = () => {
       errors.description = "Desciption is required.";
     } else if (values.description.length < 30) {
       errors.description = "Desciption is too short.";
-    } else if (values.description.length > 400) {
+    } else if (values.description.length > 500) {
       errors.description = "Desciption is too Long.";
     }
     return errors;
@@ -61,6 +87,10 @@ const CreatePost = () => {
     setImagePreview("");
     setFormvalues(initialize);
     setFormError({});
+  };
+  const closeAlert = () => {
+    setAlert({ message: "", type: "" });
+    alert();
   };
 
   const borderRed = { borderColor: "#dc2626" };
@@ -71,25 +101,24 @@ const CreatePost = () => {
           <h1 className="font-semibold text-3xl text-gray-800">Create Post</h1>
         </div>
       </div>
+      {loading && (
+        <div className="fixed top-[92px] left-[450px]">
+          <Loading />
+        </div>
+      )}
       <AnimatePresence>
-        {success && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="w-96 fixed top-7 left-[600px] flex items-center justify-between px-4 py-2 bg-green-50 border-l-8 border-green-500 text-green-700 rounded-lg shadow-md max-w-md mx-auto"
-          >
-            <div className="flex items-center">
-              <i className="bx bx-check-circle text-green-500 text-xl mr-2"></i>
-              <span className="text-sm font-medium">Successfully posted</span>
-            </div>
-            <button
-              onClick={() => setSuccess(false)}
-              className="text-green-700 hover:text-green-900 transition duration-200 active:scale-[0.95]"
-            >
-              <i className="bx bx-x text-2xl"></i>
-            </button>
-          </motion.div>
+        {alert.message && (
+          <div>
+            {alert.type === "success" ? (
+              <div className="fixed top-8 left-[600px]">
+                <SuccessAlert message={alert.message} closeAlert={closeAlert} />
+              </div>
+            ) : (
+              <div className="fixed top-8 left-[600px]">
+                <FailAlert message={alert.message} closeAlert={closeAlert} />
+              </div>
+            )}
+          </div>
         )}
       </AnimatePresence>
       <div className="grid grid-cols-3 gap-6">
@@ -157,6 +186,7 @@ const CreatePost = () => {
               <input
                 type="text"
                 name="thumbnail"
+                autoComplete="off"
                 style={formError.thumbnail && borderRed}
                 value={formValue.thumbnail}
                 onChange={(e) => {

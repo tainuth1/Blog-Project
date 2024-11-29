@@ -1,13 +1,112 @@
 {
   "posts": [
     {
-      "id": 1,
+      "id": "1",
       "title": "I built a Flexbox Playground with Awesome Animations",
-      "category": "Programming",
+      "category": "Gaming",
       "thumbnail": "https://media.daily.dev/image/upload/s--0QFCMAes--/f_auto/v1732016411/posts/rq8I7OJvm",
       "description": "Hey everyone 👋 Im excited to share the latest update to my open source project. Its called Flexbox labs, and its a visual tool that helps you create layouts using CSS Flexbox.",
       "userId": 1,
       "created_at": "2024-11-27T16:15:30.697Z"
+    },
+    {
+      "id": "1732782110174",
+      "title": "Cursify Cursor Animation Library",
+      "category": "Programming",
+      "description": "🚀 Introducing Cursify!\n\nAn open-source library for stunning cursor animations. 🎨 Built with React, TypeScript, Tailwind CSS, and Framer Motion. 🔧 100% customizable and easy to integrate.\n\n🌟 Add interactivity to your projects effortlessly! Check it out here: https://cursify.vercel.app/",
+      "thumbnail": "https://media.daily.dev/image/upload/s--Cdt1jBhJ--/f_auto/v1732645204/posts/4lzGoyMSG",
+      "userId": 1,
+      "created_at": "2024-11-28T08:21:50.174Z"
+    },
+    {
+      "id": "1732782327290",
+      "title": "All Javascript Concepts ( A-Z) Basic to Advanced",
+      "category": "Programming",
+      "description": "In this post, I’ve covered key JavaScript concepts ranging from basic topics like variables and data types, to more advanced concepts such as closures, promises, asynchronous programming, object-oriented programming, event handling, and ES6+ features like arrow functions, destructuring, and modules.",
+      "thumbnail": "https://media.daily.dev/image/upload/s--no2yCEHF--/f_auto/v1731865715/posts/HBJQLUdFi",
+      "userId": 1,
+      "created_at": "2024-11-28T08:25:27.290Z"
+    },
+    {
+      "id": "1732785044411",
+      "title": "What’s New in React 18: Must-Know Features & Upgrades for Beginners",
+      "category": "Programming",
+      "description": "TLDRReact 18 introduces several impactful features aimed at improving concurrency, performance, and the overall developer experience. Key highlights include concurrent rendering for smoother UIs, automatic batching to reduce unnecessary renders, the useTransition hook to prioritize updates, and enhanced Suspense for simpler",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/129df34569b6ff49d19d7c68c1021e02?_a=AQAEuiZ",
+      "userId": 1,
+      "created_at": "2024-11-28T09:10:44.411Z"
+    },
+    {
+      "id": "1732793068521",
+      "title": "Teams Toolkit for Visual Studio Code update – November 2024",
+      "category": "Programming",
+      "description": "TLDRThe latest Teams Toolkit for Visual Studio Code update, version 5.10.1, introduces several new features, enhancements, and crucial bug fixes. Notable updates include terminology changes, stability improvements for debug sessions, and schema validation fixes.",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/e2a12d25a6396f1a931ba1805f6b2927?_a=AQAEuj9",
+      "userId": 1,
+      "created_at": "2024-11-28T11:24:28.521Z"
+    },
+    {
+      "id": "1732793317002",
+      "title": "How to use ORMs (Prisma / Drizzle / Knex.js) in a TypeScript backend built with Encore.ts",
+      "category": "Programming",
+      "description": "Learn how to use ORMs such as Prisma, Drizzle, and Knex.js with Encore.ts in a TypeScript backend. The guide covers creating and managing databases locally, deploying apps to the cloud, and using SQL and ORM approaches for database interactions. Example configurations and code snippets for each ORM are provided along with deployment instructions for Docker and cloud platforms.",
+      "thumbnail": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F2x9103e05f6j4f5cqj5g.png",
+      "userId": 1,
+      "created_at": "2024-11-28T11:28:37.002Z"
+    },
+    {
+      "id": "1732794086262",
+      "title": "The Future of HTML: What to Expect from \"HTML6\"",
+      "category": "Programming",
+      "description": "The post discusses the potential features and improvements expected in the next iteration of HTML, often referred to as 'HTML6.' These include new semantic elements, Web Components, enhanced APIs like WebAssembly and WebXR, native localization support, container queries for responsive design, enhanced form features, native lazy loading, and advanced media support. The evolution of HTML is becoming more iterative, with ongoing innovations from platforms like W3C and WHATWG.",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/876042e0045074f6a2ab78252fd67564?_a=AQAEuj9",
+      "userId": 1,
+      "created_at": "2024-11-28T11:41:26.262Z"
+    },
+    {
+      "id": "1732795281994",
+      "title": "Microsoft Visual Studio Code Preview Copilot Edits and More",
+      "category": "Programming",
+      "description": "Visual Studio Code 1.95 introduces Copilot Edits, an AI-powered feature that suggests code changes across multiple files based on user prompts. The update also includes the graduation of multiple GitHub accounts to default behavior, a new default location for GitHub Copilot Chat view, a GitHub Copilot code review capability, and enhanced support for TypeScript 5.7.",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/3df930591a6986f0d3f3de71b7239afb?_a=AQAEuj9",
+      "userId": 1,
+      "created_at": "2024-11-28T12:01:21.994Z"
+    },
+    {
+      "id": "1732795565719",
+      "title": "Best 7 Practice Projects to Level Up your Skills",
+      "category": "Programming",
+      "description": "Building hands-on projects is essential for web development growth. This post discusses seven practice projects - To-Do List App, Simple Calculator, Weather App, E-commerce Product Page, Tic-Tac-Toe Game, Real-time Chat Application, and Personal Portfolio Website. Each project helps enhance various skills such as JavaScript event handling, API usage, responsive design, and more.",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/f8c75bbc9e9ff9d6046b18b28df57fc1?_a=AQAEuj9",
+      "userId": 1,
+      "created_at": "2024-11-28T12:06:05.719Z"
+    },
+    {
+      "id": "1732796038066",
+      "title": "How to use TypeScript with React... But should you?",
+      "category": "Programming",
+      "description": "Here you will find a detailed video why should you use typescript or why not also covering the basic concept: https://www.youtube.com/watch?v=ydkQlJhodio",
+      "thumbnail": "https://media.daily.dev/image/upload/s--pu5Eql0z--/f_auto/v1732535841/posts/FpbkftRkW",
+      "userId": 1,
+      "created_at": "2024-11-28T12:13:58.066Z"
+    },
+    {
+      "id": "1732810886642",
+      "title": "React Best Practices Ever Developer Should Know",
+      "category": "Programming",
+      "description": "This guide offers crucial tips on optimizing React development using hooks. It covers the importance of maintaining immutability in state management, avoiding the overuse of useState, leveraging useMemo for performance improvements, ensuring unique keys for list items, and properly handling dependencies in useEffect. ",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/040cdcf87e243d916a4718f2d4306a01?_a=AQAEuiZ",
+      "userId": 1,
+      "created_at": "2024-11-28T16:21:26.642Z"
+    },
+    {
+      "id": 1732843182254,
+      "title": "New React 19 Features You Should Know – Explained with Code Examples",
+      "category": "Programming",
+      "description": "React 19 focuses on simplifying the development process by automating performance optimizations and removing the need for manual memoization hooks like `useMemo` and `useCallback`. The new compiler transforms React code into optimized JavaScript, and features like the `use()` hook streamline data fetching and context handling. Simplified ref handling and form management enhancements also contribute to cleaner and more efficient code.",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/07c2f9a787b91a9dfc310d0e3c73366b?_a=AQAEuiZ",
+      "userId": 1,
+      "created_at": "2024-11-29T01:19:42.254Z"
     }
   ]
 }
