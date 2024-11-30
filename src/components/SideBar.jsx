@@ -1,10 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const menuStyle =
   "w-full flex items-center gap-3 pl-5 py-4 text-md text-gray-600 font-medium rounded-r-lg block";
 
 const SideBar = () => {
+  const location = useLocation();
   return (
     <div className="w-64 py-4">
       <div className="w-full text-center pl-5 flex justify-between items-center">
@@ -19,7 +20,15 @@ const SideBar = () => {
           <li className="w-full">
             <NavLink
               to="/"
-              className={menuStyle}
+              end
+              className={({ isActive }) =>
+                `${menuStyle} ${
+                  location.pathname === "/" ||
+                  location.pathname.startsWith("/blog/")
+                    ? "active"
+                    : ""
+                }`
+              }
             >
               <i className="bx bxs-shapes text-xl"></i> Home
             </NavLink>

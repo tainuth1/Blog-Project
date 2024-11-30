@@ -1,18 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ArticleCard from "../ArticleCard";
+import { AnimatePresence, motion } from "motion/react";
+import { Outlet } from "react-router-dom";
+import Loading from "../Loading";
 
 const Home = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [showContentPopUp, setShowContentPopUp] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getBlog = async () => {
+      setLoading(true);
+      try {
+        const responce = await fetch("http://localhost:3000/posts");
+        if (!responce.ok) {
+          throw new Error("Fail to fetch data from api");
+        }
+
+        const data = await responce.json();
+        setBlogs(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getBlog();
+  }, []);
+  if (!showContentPopUp) {
+    window.history.pushState({}, "", "/");
+  }
+
   return (
     <div>
+      <AnimatePresence
+        mode="wait"
+        onExitComplete={() => {
+          window.history.pushState({}, "", "/");
+        }}
+      >
+        {showContentPopUp && <Outlet context={{ setShowContentPopUp }} />}
+      </AnimatePresence>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-5">
           <h1 className="font-semibold text-3xl text-gray-800">Article</h1>
           <span className="px-3 py-[2px] rounded-full bg-gray-100 border text-sm">
-            120
+            {blogs.length}
           </span>
         </div>
         <div className=" flex gap-3">
           <select className="w-40 px-3 py-2 focus:outline-blue-600 text-gray-700 rounded-full shadow-inner bg-gray-100 border">
+            <option value="All">All</option>
             <option value="Technology">Technology</option>
             <option value="News">News</option>
             <option value="Jobs">Jobs</option>
@@ -30,8 +69,19 @@ const Home = () => {
         </div>
       </div>
       <div className="grid grid-cols-4 gap-5 mt-5">
-        {[1, 2, 3, 4, 5].map((a) => {
-          return <ArticleCard key={a} />;
+        {loading && (
+          <div className="flex col-span-4 justify-center">
+            <Loading />
+          </div>
+        )}
+        {blogs.map((blog) => {
+          return (
+            <ArticleCard
+              key={blog.id}
+              blog={blog}
+              setShowContentPopUp={setShowContentPopUp}
+            />
+          );
         })}
       </div>
     </div>

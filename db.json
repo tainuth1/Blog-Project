@@ -100,13 +100,40 @@
       "created_at": "2024-11-28T16:21:26.642Z"
     },
     {
-      "id": 1732843182254,
+      "id": "1732843182254",
       "title": "New React 19 Features You Should Know – Explained with Code Examples",
       "category": "Programming",
       "description": "React 19 focuses on simplifying the development process by automating performance optimizations and removing the need for manual memoization hooks like `useMemo` and `useCallback`. The new compiler transforms React code into optimized JavaScript, and features like the `use()` hook streamline data fetching and context handling. Simplified ref handling and form management enhancements also contribute to cleaner and more efficient code.",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/07c2f9a787b91a9dfc310d0e3c73366b?_a=AQAEuiZ",
       "userId": 1,
       "created_at": "2024-11-29T01:19:42.254Z"
+    },
+    {
+      "id": "1732848972401",
+      "title": "“Secure by default” - how Phoenix keeps you safe for free",
+      "category": "Gaming",
+      "description": "Phoenix LiveView helps developers build secure web applications by providing features like automatic HTML-escaping, CSRF protection, secure browser headers, and SQL injection mitigation by default. These built-in security measures protect against common vulnerabilities without requiring extensive security knowledge from the developer, making secure development easier and more efficient. ",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/9863636ba164c3c5c89148935ae9c546?_a=AQAEuj9",
+      "userId": 1,
+      "created_at": "2024-11-29T02:56:12.401Z"
+    },
+    {
+      "id": 1732892521546,
+      "title": "Goodbye ChatGPT: Here Are 8 (New & Free) AI Tools That Will Blow Your Mind",
+      "category": "Technology",
+      "description": "Discover 8 new and free AI tools that can significantly enhance your productivity. The featured tools include Fiverr's Logo Maker for quick logo designs, APIDNA for easy API integration, Mailbox AI for email management, Skibs for creating animated 3D characters, Overlap for converting long videos into short clips, Loomos for enhancing video presentations, Paperguide for conducting research, and Runway Act-One for generating expressive videos.",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/9ff473090c4334e1208ac2ab4b935844?_a=AQAEuj9",
+      "userId": 1,
+      "created_at": "2024-11-29T15:02:01.546Z"
+    },
+    {
+      "id": 1732892600453,
+      "title": "JEP 498: Warn upon Use of Memory-Access Methods in sun.misc.Unsafe",
+      "category": "Programming",
+      "description": "JEP 498 will issue runtime warnings when memory-access methods in sun.misc.Unsafe are invoked, as these methods are deprecated and will be removed in future Java releases. Developers are encouraged to transition to safer, standard APIs like VarHandle and MemorySegment for memory access. This change aims to enhance the security and stability of Java applications by reducing reliance on unsafe operations.",
+      "thumbnail": "https://media.daily.dev/image/upload/s--HRgLpUt6--/f_auto/v1722860399/public/Placeholder%2003",
+      "userId": 1,
+      "created_at": "2024-11-29T15:03:20.453Z"
     }
   ]
 }
