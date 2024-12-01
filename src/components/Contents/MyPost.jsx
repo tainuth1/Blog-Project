@@ -1,6 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Loading from "../Loading";
+import { AnimatePresence } from "motion/react";
+import SuccessAlert from "../SuccessAlert";
+import FailAlert from "../FailAlert";
 
 const MyPost = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({ message: "", type: "" });
+
+  useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      try {
+        const responece = await fetch("http://localhost:3000/posts");
+
+        if (!responece.ok) {
+          throw new Error("Failed to fetch data from API");
+        }
+
+        const data = await responece.json();
+        setBlogs(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData();
+  }, []);
+
+  const deletePost = async (id) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`http://localhost:3000/posts/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete data from api");
+      }
+      setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== id));
+      setAlert({ message: "Delete successfully", type: "success" });
+    } catch (error) {
+      setAlert({ message: "Delete Failed", type: "error" });
+    } finally {
+      setLoading(false);
+    }
+  };
+  const closeAlert = () => {
+    setAlert({ message: "", type: "" });
+    alert();
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center ">
@@ -8,6 +59,26 @@ const MyPost = () => {
           <h1 className="font-semibold text-3xl text-gray-800">My Post</h1>
         </div>
       </div>
+      {loading && (
+        <div className="fixed top-5 left-[750px]">
+          <Loading />
+        </div>
+      )}
+      <AnimatePresence>
+        {alert.message && (
+          <div>
+            {alert.type === "success" ? (
+              <div className="fixed top-8 left-[600px]">
+                <SuccessAlert message={alert.message} closeAlert={closeAlert} />
+              </div>
+            ) : (
+              <div className="fixed top-8 left-[600px]">
+                <FailAlert message={alert.message} closeAlert={closeAlert} />
+              </div>
+            )}
+          </div>
+        )}
+      </AnimatePresence>
       <div className="overflow-x-auto mt-4">
         <table className="min-w-full text-left bg-white overflow-hidden rounded-lg dark:bg-gray-800">
           <thead>
@@ -33,30 +104,47 @@ const MyPost = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
-            <tr className="hover:bg-gray-50 dark:hover:bg-gray-700">
-              <td className="px-6 py-3 text-[14px] dark:text-gray-200">#1</td>
-              <td className="px-6 py-3">
-                <span className="w-[150px] text-[14px] inline-block whitespace-nowrap overflow-hidden text-ellipsis font-medium dark:text-gray-200">
-                  Cherry Delight
-                </span>
-              </td>
-              <td className="px-6 py-3 text-[14px] text-gray-600 dark:text-gray-300">
-                Dessert
-              </td>
-              <td className="px-6 py-3 text-[14px] text-gray-600 dark:text-gray-300">
-                $90.50
-              </td>
-              <td className="px-6 py-3 text-[14px]">
-                <span className="inline-block px-3 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
-                  Active
-                </span>
-              </td>
-              <td className="px-6 py-4 relative">
-                <button className="text-gray-500 hover:text-gray-700 dark:text-gray-400">
-                  <i className="bx bx-dots-horizontal-rounded text-[24px]"></i>
-                </button>
-              </td>
-            </tr>
+            {blogs.map((blog) => {
+              return (
+                <tr
+                  key={blog.id}
+                  className="hover:bg-gray-50 dark:hover:bg-gray-700"
+                >
+                  <td className="px-6 py-3 text-[14px] dark:text-gray-200">
+                    #{blog.id}
+                  </td>
+                  <td className="px-6 py-3">
+                    <span className="w-[150px] text-[14px] inline-block whitespace-nowrap overflow-hidden text-ellipsis font-medium dark:text-gray-200">
+                      {blog.title}
+                    </span>
+                  </td>
+                  <td className="px-6 py-3 text-[14px] text-gray-600 dark:text-gray-300">
+                    {blog.category}
+                  </td>
+                  <td className="px-6 py-3">
+                    <span className="w-[250px] text-[14px] inline-block whitespace-nowrap overflow-hidden text-gray-600 text-ellipsis dark:text-gray-200">
+                      {blog.description}
+                    </span>
+                  </td>
+                  <td className="px-6 py-3 text-[14px]">
+                    <span className="inline-block px-3 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
+                      Active
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 flex items-center gap-2">
+                    <button className="px-3 py-1 bg-blue-600 text-white rounded-md active:scale-[0.97]">
+                      <i className="bx bxs-edit"></i>
+                    </button>
+                    <button
+                      onClick={() => deletePost(blog.id)}
+                      className="px-3 py-1 bg-red-600 text-white rounded-md active:scale-[0.97]"
+                    >
+                      <i className="bx bx-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

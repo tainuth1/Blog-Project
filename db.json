@@ -1,24 +1,6 @@
 {
   "posts": [
     {
-      "id": "1",
-      "title": "I built a Flexbox Playground with Awesome Animations",
-      "category": "Gaming",
-      "thumbnail": "https://media.daily.dev/image/upload/s--0QFCMAes--/f_auto/v1732016411/posts/rq8I7OJvm",
-      "description": "Hey everyone 👋 Im excited to share the latest update to my open source project. Its called Flexbox labs, and its a visual tool that helps you create layouts using CSS Flexbox.",
-      "userId": 1,
-      "created_at": "2024-11-27T16:15:30.697Z"
-    },
-    {
-      "id": "1732782110174",
-      "title": "Cursify Cursor Animation Library",
-      "category": "Programming",
-      "description": "🚀 Introducing Cursify!\n\nAn open-source library for stunning cursor animations. 🎨 Built with React, TypeScript, Tailwind CSS, and Framer Motion. 🔧 100% customizable and easy to integrate.\n\n🌟 Add interactivity to your projects effortlessly! Check it out here: https://cursify.vercel.app/",
-      "thumbnail": "https://media.daily.dev/image/upload/s--Cdt1jBhJ--/f_auto/v1732645204/posts/4lzGoyMSG",
-      "userId": 1,
-      "created_at": "2024-11-28T08:21:50.174Z"
-    },
-    {
       "id": "1732782327290",
       "title": "All Javascript Concepts ( A-Z) Basic to Advanced",
       "category": "Programming",
@@ -53,87 +35,6 @@
       "thumbnail": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F2x9103e05f6j4f5cqj5g.png",
       "userId": 1,
       "created_at": "2024-11-28T11:28:37.002Z"
-    },
-    {
-      "id": "1732794086262",
-      "title": "The Future of HTML: What to Expect from \"HTML6\"",
-      "category": "Programming",
-      "description": "The post discusses the potential features and improvements expected in the next iteration of HTML, often referred to as 'HTML6.' These include new semantic elements, Web Components, enhanced APIs like WebAssembly and WebXR, native localization support, container queries for responsive design, enhanced form features, native lazy loading, and advanced media support. The evolution of HTML is becoming more iterative, with ongoing innovations from platforms like W3C and WHATWG.",
-      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/876042e0045074f6a2ab78252fd67564?_a=AQAEuj9",
-      "userId": 1,
-      "created_at": "2024-11-28T11:41:26.262Z"
-    },
-    {
-      "id": "1732795281994",
-      "title": "Microsoft Visual Studio Code Preview Copilot Edits and More",
-      "category": "Programming",
-      "description": "Visual Studio Code 1.95 introduces Copilot Edits, an AI-powered feature that suggests code changes across multiple files based on user prompts. The update also includes the graduation of multiple GitHub accounts to default behavior, a new default location for GitHub Copilot Chat view, a GitHub Copilot code review capability, and enhanced support for TypeScript 5.7.",
-      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/3df930591a6986f0d3f3de71b7239afb?_a=AQAEuj9",
-      "userId": 1,
-      "created_at": "2024-11-28T12:01:21.994Z"
-    },
-    {
-      "id": "1732795565719",
-      "title": "Best 7 Practice Projects to Level Up your Skills",
-      "category": "Programming",
-      "description": "Building hands-on projects is essential for web development growth. This post discusses seven practice projects - To-Do List App, Simple Calculator, Weather App, E-commerce Product Page, Tic-Tac-Toe Game, Real-time Chat Application, and Personal Portfolio Website. Each project helps enhance various skills such as JavaScript event handling, API usage, responsive design, and more.",
-      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/f8c75bbc9e9ff9d6046b18b28df57fc1?_a=AQAEuj9",
-      "userId": 1,
-      "created_at": "2024-11-28T12:06:05.719Z"
-    },
-    {
-      "id": "1732796038066",
-      "title": "How to use TypeScript with React... But should you?",
-      "category": "Programming",
-      "description": "Here you will find a detailed video why should you use typescript or why not also covering the basic concept: https://www.youtube.com/watch?v=ydkQlJhodio",
-      "thumbnail": "https://media.daily.dev/image/upload/s--pu5Eql0z--/f_auto/v1732535841/posts/FpbkftRkW",
-      "userId": 1,
-      "created_at": "2024-11-28T12:13:58.066Z"
-    },
-    {
-      "id": "1732810886642",
-      "title": "React Best Practices Ever Developer Should Know",
-      "category": "Programming",
-      "description": "This guide offers crucial tips on optimizing React development using hooks. It covers the importance of maintaining immutability in state management, avoiding the overuse of useState, leveraging useMemo for performance improvements, ensuring unique keys for list items, and properly handling dependencies in useEffect. ",
-      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/040cdcf87e243d916a4718f2d4306a01?_a=AQAEuiZ",
-      "userId": 1,
-      "created_at": "2024-11-28T16:21:26.642Z"
-    },
-    {
-      "id": "1732843182254",
-      "title": "New React 19 Features You Should Know – Explained with Code Examples",
-      "category": "Programming",
-      "description": "React 19 focuses on simplifying the development process by automating performance optimizations and removing the need for manual memoization hooks like `useMemo` and `useCallback`. The new compiler transforms React code into optimized JavaScript, and features like the `use()` hook streamline data fetching and context handling. Simplified ref handling and form management enhancements also contribute to cleaner and more efficient code.",
-      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/07c2f9a787b91a9dfc310d0e3c73366b?_a=AQAEuiZ",
-      "userId": 1,
-      "created_at": "2024-11-29T01:19:42.254Z"
-    },
-    {
-      "id": "1732848972401",
-      "title": "“Secure by default” - how Phoenix keeps you safe for free",
-      "category": "Gaming",
-      "description": "Phoenix LiveView helps developers build secure web applications by providing features like automatic HTML-escaping, CSRF protection, secure browser headers, and SQL injection mitigation by default. These built-in security measures protect against common vulnerabilities without requiring extensive security knowledge from the developer, making secure development easier and more efficient. ",
-      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/9863636ba164c3c5c89148935ae9c546?_a=AQAEuj9",
-      "userId": 1,
-      "created_at": "2024-11-29T02:56:12.401Z"
-    },
-    {
-      "id": 1732892521546,
-      "title": "Goodbye ChatGPT: Here Are 8 (New & Free) AI Tools That Will Blow Your Mind",
-      "category": "Technology",
-      "description": "Discover 8 new and free AI tools that can significantly enhance your productivity. The featured tools include Fiverr's Logo Maker for quick logo designs, APIDNA for easy API integration, Mailbox AI for email management, Skibs for creating animated 3D characters, Overlap for converting long videos into short clips, Loomos for enhancing video presentations, Paperguide for conducting research, and Runway Act-One for generating expressive videos.",
-      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/9ff473090c4334e1208ac2ab4b935844?_a=AQAEuj9",
-      "userId": 1,
-      "created_at": "2024-11-29T15:02:01.546Z"
-    },
-    {
-      "id": 1732892600453,
-      "title": "JEP 498: Warn upon Use of Memory-Access Methods in sun.misc.Unsafe",
-      "category": "Programming",
-      "description": "JEP 498 will issue runtime warnings when memory-access methods in sun.misc.Unsafe are invoked, as these methods are deprecated and will be removed in future Java releases. Developers are encouraged to transition to safer, standard APIs like VarHandle and MemorySegment for memory access. This change aims to enhance the security and stability of Java applications by reducing reliance on unsafe operations.",
-      "thumbnail": "https://media.daily.dev/image/upload/s--HRgLpUt6--/f_auto/v1722860399/public/Placeholder%2003",
-      "userId": 1,
-      "created_at": "2024-11-29T15:03:20.453Z"
     }
   ]
 }
