@@ -8,19 +8,26 @@ const MyPost = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ message: "", type: "" });
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowPerpage = 7;
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
       try {
-        const responece = await fetch("http://localhost:3000/posts");
+        const allPostsRepsonse = await fetch("http://localhost:3000/posts");
+        const allPosts = await allPostsRepsonse.json();
+        setTotalPages(Math.ceil(allPosts.length / rowPerpage));
 
-        if (!responece.ok) {
+        const response = await fetch(
+          `http://localhost:3000/posts?_page=${currentPage}&_per_page=${rowPerpage}`
+        );
+        if (!response.ok) {
           throw new Error("Failed to fetch data from API");
         }
-
-        const data = await responece.json();
-        setBlogs(data);
+        const paginatedData = await response.json();
+        setBlogs(paginatedData.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -28,7 +35,7 @@ const MyPost = () => {
       }
     };
     getData();
-  }, []);
+  }, [currentPage]);
 
   const deletePost = async (id) => {
     setLoading(true);
@@ -50,6 +57,10 @@ const MyPost = () => {
   const closeAlert = () => {
     setAlert({ message: "", type: "" });
     alert();
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -147,6 +158,21 @@ const MyPost = () => {
             })}
           </tbody>
         </table>
+        <div className="flex justify-center mt-4">
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              className={`mx-1 px-3 py-1 rounded ${
+                currentPage === index + 1
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 text-gray-700"
+              }`}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -35,6 +35,42 @@
       "thumbnail": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F2x9103e05f6j4f5cqj5g.png",
       "userId": 1,
       "created_at": "2024-11-28T11:28:37.002Z"
+    },
+    {
+      "id": "1733042017553",
+      "title": "LibreChat vs Open WebUI: Choose the Right ChatGPT UI for Your Organization",
+      "category": "Gaming",
+      "description": "LibreChat and Open WebUI are two open-source platforms that facilitate building secure, in-house AI systems. LibreChat is known for its enterprise-level authentication and flexibility, while Open WebUI offers streamlined user management and a variety of integrations. Both platforms, when integrated with Portkey, provide enhanced security, observability, and reliability for AI operations. ",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/961e99667864712859d2b236767caf05?_a=AQAEuj9",
+      "userId": 1,
+      "created_at": "2024-12-01T08:33:37.553Z"
+    },
+    {
+      "id": "1733042065306",
+      "title": "A Million Times Faster: Million.js vs React",
+      "category": "Programming",
+      "description": "Modern web development emphasizes performance, making the choice of a front-end library crucial. React, a mature tool with a component-based architecture, is often used for building dynamic interfaces but can be slower due to its size. Million.js, a newer library by Aiden Bai, focuses on highly optimized rendering, reducing overhead, and using performant algorithms, making it ideal for performance-sensitive applications. ",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/847e431f5cea5655b08e01a35ff47605?_a=AQAEuiZ",
+      "userId": 1,
+      "created_at": "2024-12-01T08:34:25.306Z"
+    },
+    {
+      "id": "1733069599207",
+      "title": "Efficient Dynamic Forms with ngComponentOutlet in Angular",
+      "category": "Technology",
+      "description": "Angular's ngComponentOutlet simplifies dynamic component loading, allowing developers to create flexible and reusable components. With the new input binding introduced in Angular 17, developers can now handle dynamic nested forms more efficiently without manually declaring injectors. Key benefits include faster development cycles, reduced bundle sizes, improved performance, scalability, and easier maintenance. ",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/b57530449daa2377dba81e56a9538bb7?_a=AQAEuiZ",
+      "userId": 1,
+      "created_at": "2024-12-01T16:13:19.207Z"
+    },
+    {
+      "id": 1733138203971,
+      "title": "Ng-News 24/45: Rationale behind (potential) Authoring Format",
+      "category": "Technology",
+      "description": "The Angular team is exploring new authoring formats due to the time-consuming adaptation of TypeScript functionality in templates, which is not true TypeScript. At ng-Poland, this reasoning was clarified. The team also shared updates on introducing Signals into various parts of Angular, such as forms and the router.",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/4ba3f7b0878b9c3f92b0240405c26c8a?_a=AQAEuj9",
+      "userId": 1,
+      "created_at": "2024-12-02T11:16:43.971Z"
     }
   ]
 }
