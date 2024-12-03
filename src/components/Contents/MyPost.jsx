@@ -3,6 +3,7 @@ import Loading from "../Loading";
 import { AnimatePresence } from "motion/react";
 import SuccessAlert from "../SuccessAlert";
 import FailAlert from "../FailAlert";
+import { Link, Outlet } from "react-router-dom";
 
 const MyPost = () => {
   const [blogs, setBlogs] = useState([]);
@@ -11,6 +12,8 @@ const MyPost = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const rowPerpage = 7;
   const [totalPages, setTotalPages] = useState(0);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [reloadData, setRelaodData] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -27,6 +30,7 @@ const MyPost = () => {
           throw new Error("Failed to fetch data from API");
         }
         const paginatedData = await response.json();
+        setRelaodData(false);
         setBlogs(paginatedData.data);
       } catch (error) {
         console.log(error);
@@ -35,7 +39,7 @@ const MyPost = () => {
       }
     };
     getData();
-  }, [currentPage]);
+  }, [currentPage, reloadData]);
 
   const deletePost = async (id) => {
     setLoading(true);
@@ -63,7 +67,34 @@ const MyPost = () => {
     setCurrentPage(newPage);
   };
 
-  return (
+  const timeAgo = (timestamp) => {
+    const now = new Date();
+    const date = new Date(timestamp);
+    const seconds = Math.floor((now - date) / 1000);
+
+    const intervals = [
+      { label: "year", seconds: 31536000 },
+      { label: "month", seconds: 2592000 },
+      { label: "week", seconds: 604800 },
+      { label: "day", seconds: 86400 },
+      { label: "hour", seconds: 3600 },
+      { label: "minute", seconds: 60 },
+      { label: "second", seconds: 1 },
+    ];
+    for (const interval of intervals) {
+      const count = Math.floor(seconds / interval.seconds);
+      if (count > 0) {
+        return `${count} ${interval.label}${count !== 1 ? "s" : ""} ago`;
+      }
+    }
+    return "Just now";
+  };
+
+  if (!showEditForm) {
+    window.history.pushState({}, "", "/my-post");
+  }
+
+  return (                                            
     <div>
       <div className="flex justify-between items-center ">
         <div className="flex items-center gap-5">
@@ -88,6 +119,16 @@ const MyPost = () => {
               </div>
             )}
           </div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence
+        mode="wait"
+        onExitComplete={() => {
+          window.history.pushState({}, "", "/");
+        }}
+      >
+        {showEditForm && (
+          <Outlet context={{ setShowEditForm, setAlert, setRelaodData }} />
         )}
       </AnimatePresence>
       <div className="overflow-x-auto mt-4">
@@ -137,15 +178,20 @@ const MyPost = () => {
                       {blog.description}
                     </span>
                   </td>
-                  <td className="px-6 py-3 text-[14px]">
-                    <span className="inline-block px-3 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
+                  <td className="px-6 py-3 text-[14px] text-gray-600 dark:text-gray-300">
+                    {/* <span className="inline-block px-3 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
                       Active
-                    </span>
+                    </span> */}
+                    {timeAgo(blog.created_at)}
                   </td>
                   <td className="px-6 py-4 flex items-center gap-2">
-                    <button className="px-3 py-1 bg-blue-600 text-white rounded-md active:scale-[0.97]">
+                    <Link
+                      to={`edit/${blog.id}`}
+                      onClick={() => setShowEditForm(true)}
+                      className="px-3 py-1 bg-blue-600 text-white rounded-md active:scale-[0.97]"
+                    >
                       <i className="bx bxs-edit"></i>
-                    </button>
+                    </Link>
                     <button
                       onClick={() => deletePost(blog.id)}
                       className="px-3 py-1 bg-red-600 text-white rounded-md active:scale-[0.97]"

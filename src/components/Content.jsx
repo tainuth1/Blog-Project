@@ -5,6 +5,7 @@ import CreatePost from "./Contents/CreatePost";
 import MyPost from "./Contents/MyPost";
 import Settings from "./Contents/Settings";
 import ViewContent from "./ViewContent";
+import EditForm from "./EditForm";
 
 const Content = () => {
   return (
@@ -18,7 +19,9 @@ const Content = () => {
             <Route path="blog/:PostId" element={<ViewContent />} />
           </Route>
           <Route path="/create-post" element={<CreatePost />} />
-          <Route path="/my-post" element={<MyPost />} />
+          <Route path="/my-post" element={<MyPost />} >
+            <Route path="edit/:EditId" element={<EditForm />} />
+          </Route>
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
