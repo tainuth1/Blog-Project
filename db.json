@@ -73,7 +73,7 @@
       "created_at": "2024-12-02T11:16:43.971Z"
     },
     {
-      "id": 1733227381316,
+      "id": "1733227381316",
       "title": "From Code to Clarity With the Redesigned Structure Tool Window",
       "category": "News",
       "description": "The redesigned Structure tool window in IntelliJ IDEA now includes a Logical view that helps developers understand their codebase by showing framework-specific connections and dependencies. This enhancement leverages domain context providers to reveal intricate details of project structures, benefiting both AI assistants and human developers. The tool displays valuable insights for Spring Boot applications, including bean configurations, API endpoints, event publishers, and JPA entities.",

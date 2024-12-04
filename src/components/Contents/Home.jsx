@@ -1,33 +1,53 @@
 import React, { useEffect, useState } from "react";
 import ArticleCard from "../ArticleCard";
 import { AnimatePresence, motion } from "motion/react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import Loading from "../Loading";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const [showContentPopUp, setShowContentPopUp] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useSearchParams({ category: "All" });
+  const getCate = filter.get("category");
 
   useEffect(() => {
     const getBlog = async () => {
       setLoading(true);
-      try {
-        const responce = await fetch("http://localhost:3000/posts");
-        if (!responce.ok) {
-          throw new Error("Fail to fetch data from api");
-        }
+      if (getCate == "All") {
+        try {
+          const responce = await fetch("http://localhost:3000/posts");
+          if (!responce.ok) {
+            throw new Error("Fail to fetch data from api");
+          }
 
-        const data = await responce.json();
-        setBlogs(data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+          const data = await responce.json();
+          setBlogs(data);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        try {
+          const responce = await fetch(
+            `http://localhost:3000/posts?category=${getCate}`
+          );
+          if (!responce.ok) {
+            throw new Error("Fail to fetch data from api");
+          }
+
+          const data = await responce.json();
+          setBlogs(data);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
       }
     };
     getBlog();
-  }, []);
+  }, [getCate]);
   if (!showContentPopUp) {
     window.history.pushState({}, "", "/");
   }
@@ -50,7 +70,11 @@ const Home = () => {
           </span>
         </div>
         <div className=" flex gap-3">
-          <select className="w-40 px-3 py-2 focus:outline-blue-600 text-gray-700 rounded-full shadow-inner bg-gray-100 border">
+          <select
+            value={getCate}
+            onChange={(e) => setFilter({ category: e.target.value })}
+            className="w-40 px-3 py-2 focus:outline-blue-600 text-gray-700 rounded-full shadow-inner bg-gray-100 border"
+          >
             <option value="All">All</option>
             <option value="Technology">Technology</option>
             <option value="News">News</option>
