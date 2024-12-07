@@ -3,15 +3,17 @@ import { AnimatePresence, motion } from "motion/react";
 import Loading from "../Loading";
 import SuccessAlert from "../SuccessAlert";
 import FailAlert from "../FailAlert";
+import { useAuth } from "../auth/AuthProvider";
 
 const CreatePost = () => {
+  const { user } = useAuth();
   const initialize = {
     id: Date.now(),
     title: "",
     category: "",
     description: "",
     thumbnail: "",
-    userId: 1,
+    userId: user.id,
     created_at: new Date().toISOString(),
   };
   const [imagePreview, setImagePreview] = useState("");

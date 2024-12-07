@@ -4,6 +4,7 @@ import { AnimatePresence } from "motion/react";
 import SuccessAlert from "../SuccessAlert";
 import FailAlert from "../FailAlert";
 import { Link, Outlet } from "react-router-dom";
+import { useAuth } from "../auth/AuthProvider";
 
 const MyPost = () => {
   const [blogs, setBlogs] = useState([]);
@@ -14,17 +15,20 @@ const MyPost = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [showEditForm, setShowEditForm] = useState(false);
   const [reloadData, setRelaodData] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
       try {
-        const allPostsRepsonse = await fetch("http://localhost:3000/posts");
+        const allPostsRepsonse = await fetch(
+          `http://localhost:3000/posts?userId=${user.id}`
+        );
         const allPosts = await allPostsRepsonse.json();
         setTotalPages(Math.ceil(allPosts.length / rowPerpage));
 
         const response = await fetch(
-          `http://localhost:3000/posts?_page=${currentPage}&_per_page=${rowPerpage}`
+          `http://localhost:3000/posts?_page=${currentPage}&_per_page=${rowPerpage}&userId=${user.id}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data from API");
@@ -94,7 +98,7 @@ const MyPost = () => {
     window.history.pushState({}, "", "/my-post");
   }
 
-  return (                                            
+  return (
     <div>
       <div className="flex justify-between items-center ">
         <div className="flex items-center gap-5">

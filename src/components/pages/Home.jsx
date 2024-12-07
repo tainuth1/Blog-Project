@@ -3,6 +3,7 @@ import ArticleCard from "../ArticleCard";
 import { AnimatePresence, motion } from "motion/react";
 import { Outlet, useSearchParams } from "react-router-dom";
 import Loading from "../Loading";
+import { useAuth } from "../auth/AuthProvider";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
@@ -10,6 +11,8 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useSearchParams({ category: "All" });
   const getCate = filter.get("category");
+
+  const { user } = useAuth();
 
   useEffect(() => {
     const getBlog = async () => {

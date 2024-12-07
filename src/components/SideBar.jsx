@@ -1,11 +1,13 @@
 import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { useAuth } from "./auth/AuthProvider";
 
 const menuStyle =
   "w-full flex items-center gap-3 pl-5 py-4 text-md text-gray-600 font-medium rounded-r-lg block";
 
 const SideBar = () => {
   const location = useLocation();
+  const { logout } = useAuth();
   return (
     <div className="w-64 py-4">
       <div className="w-full text-center pl-5 flex justify-between items-center">
@@ -47,6 +49,11 @@ const SideBar = () => {
             <NavLink to="/settings" className={menuStyle}>
               <i className="bx bxs-cog text-xl"></i> Settings
             </NavLink>
+          </li>
+          <li className="w-full">
+            <button onClick={logout} className={menuStyle}>
+              <i className="bx bx-log-out text-xl"></i> Logout
+            </button>
           </li>
         </ul>
       </div>
