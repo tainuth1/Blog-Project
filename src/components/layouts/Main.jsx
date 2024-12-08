@@ -6,7 +6,9 @@ import { Outlet } from "react-router-dom";
 const Main = () => {
   return (
     <div className="w-full flex gap-6 pr-4">
-      <SideBar />
+      <div className="h-[100vh] sticky top-0">
+        <SideBar />
+      </div>
       <div className="w-full h-full">
         <Navigation />
         <div
