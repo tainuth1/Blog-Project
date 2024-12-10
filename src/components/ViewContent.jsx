@@ -1,27 +1,72 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "motion/react";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import Comment from "./Comment";
+import { useAuth } from "./auth/AuthProvider";
 
 const ViewContent = () => {
   const { setShowContentPopUp } = useOutletContext();
   const { PostId } = useParams();
   const [showBlog, setShowBlog] = useState({});
   const [commentValue, setCommentValue] = useState("");
+  const { user } = useAuth();
+  const [comments, setComments] = useState([]);
+  const [ownerPostData, setOwnerPostData] = useState({});
   const closeModal = () => {
     setShowContentPopUp(false);
   };
-
+  const postComment = async () => {
+    const comment = {
+      id: Date.now(),
+      postId: PostId,
+      userId: user.id,
+      content: commentValue,
+      created_at: new Date().toISOString(),
+    };
+    try {
+      const response = await fetch("http://localhost:3000/comments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(comment),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch data from api.");
+      }
+      const newComment = await response.json();
+      setCommentValue("");
+      setComments((prevComments) => [...prevComments, newComment]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const getData = async () => {
       try {
         const responce = await fetch(`http://localhost:3000/posts/${PostId}`);
+        const commentResponse = await fetch(
+          `http://localhost:3000/comments?postId=${PostId}`
+        );
 
         if (!responce.ok) {
           throw new Error("Fail to fetch data from api");
         }
+        if (!commentResponse.ok) {
+          throw new Error("Fail to fetch comment from api");
+        }
 
         const data = await responce.json();
+        const commentData = await commentResponse.json();
+        const ownerPostResponse = await fetch(
+          `http://localhost:3000/users/${data.userId}`
+        );
+        if (!ownerPostResponse.ok) {
+          throw new Error("Fail to fetch comment from api");
+        }
+        const ownerPostData = await ownerPostResponse.json();
+        setOwnerPostData(ownerPostData);
+        setComments(commentData);
         setShowBlog(data);
       } catch (error) {
         console.log(error);
@@ -88,14 +133,18 @@ const ViewContent = () => {
                 <div className="flex items-center gap-2">
                   <div className="w-12 h-12 rounded-full overflow-hidden">
                     <img
-                      src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
+                      src={ownerPostData.profile}
                       alt=""
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="">
-                    <h3 className="text-gray-800 font-medium">Tai Nuth</h3>
-                    <p className="text-[12px] text-gray-600">@tainuth1</p>
+                    <h3 className="text-gray-800 font-medium">
+                      {ownerPostData.nickname}
+                    </h3>
+                    <p className="text-[12px] text-gray-600">
+                      @{ownerPostData.username}
+                    </p>
                   </div>
                 </div>
                 <button className="border-2 border-blue-600 px-6 py-2 rounded-lg text-blue-700 active:scale-[0.95]">
@@ -134,9 +183,19 @@ const ViewContent = () => {
                   </ul>
                 </div>
                 <div className="w-full h-full pb-64 overflow-y-scroll flex flex-col mt-3 gap-4">
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((a) => {
-                    return <Comment key={a} />;
-                  })}
+                  {comments.length === 0 ? (
+                    <p className="text-center text-gray-600">No Comment</p>
+                  ) : (
+                    comments.map((comment) => {
+                      return (
+                        <Comment
+                          key={comment.id}
+                          comments={comment}
+                          showBlog={showBlog}
+                        />
+                      );
+                    })
+                  )}
                 </div>
               </div>
               <div className="absolute w-full bottom-[48px] z-[1]">
@@ -146,7 +205,8 @@ const ViewContent = () => {
                 >
                   <input
                     type="text"
-                    name=""
+                    name="comment"
+                    autoComplete="off"
                     value={commentValue}
                     onChange={(e) => setCommentValue(e.target.value)}
                     placeholder="Add Comment"
@@ -154,7 +214,8 @@ const ViewContent = () => {
                   />
                   <button
                     type="button"
-                    className={`text-sm px-3 font-semibold  ${
+                    onClick={postComment}
+                    className={`text-sm px-3 font-semibold active:scale-[0.95]  ${
                       commentValue ? "text-red-600" : "text-gray-700"
                     }`}
                   >
