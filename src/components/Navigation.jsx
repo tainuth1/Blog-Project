@@ -12,7 +12,7 @@ const Navigation = () => {
       >
         <img
           className="w-full h-full object-cover rounded-full"
-          src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
+          src={user.profile}
           alt=""
         />
       </Link>
