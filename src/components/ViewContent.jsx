@@ -23,22 +23,24 @@ const ViewContent = () => {
       content: commentValue,
       created_at: new Date().toISOString(),
     };
-    try {
-      const response = await fetch("http://localhost:3000/comments", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(comment),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch data from api.");
+    if (commentValue.trim() != "") {
+      try {
+        const response = await fetch("http://localhost:3000/comments", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(comment),
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch data from api.");
+        }
+        const newComment = await response.json();
+        setCommentValue("");
+        setComments((prevComments) => [...prevComments, newComment]);
+      } catch (error) {
+        console.log(error);
       }
-      const newComment = await response.json();
-      setCommentValue("");
-      setComments((prevComments) => [...prevComments, newComment]);
-    } catch (error) {
-      console.log(error);
     }
   };
   useEffect(() => {
@@ -162,7 +164,7 @@ const ViewContent = () => {
                   <button className="w-8 h-8 border flex justify-center rounded-full items-center text-lg text-gray-800 active:scale-[0.97]">
                     <i className="bx bx-comment-detail"></i>
                   </button>
-                  <span className="text-sm">355</span>
+                  <span className="text-sm">{comments.length}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <button className="w-8 h-8 border flex justify-center rounded-full items-center text-lg text-gray-800 active:scale-[0.97]">
