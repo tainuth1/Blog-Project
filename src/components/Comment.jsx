@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "./auth/AuthProvider";
 
-const Comment = ({ comments, showBlog }) => {
+const Comment = ({
+  comments,
+  showBlog,
+  setReRenderComments,
+  reRenderComments,
+}) => {
   const [userData, setUserData] = useState();
+  const [deleteButton, setDeleteButton] = useState(false);
+  const { user } = useAuth();
   const timeAgo = (timestamp) => {
     const now = new Date();
     const date = new Date(timestamp);
@@ -24,6 +32,21 @@ const Comment = ({ comments, showBlog }) => {
     }
     return "Just now";
   };
+
+  const deleteComment = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/comments/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete comment");
+      }
+      setReRenderComments(!reRenderComments);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const getUserInfo = async () => {
       try {
@@ -54,7 +77,7 @@ const Comment = ({ comments, showBlog }) => {
               />
             </div>
           </div>
-          <div className="">
+          <div className="w-full">
             <h2 className="text-[12px] transition-all text-gray-800 hover:underline cursor-pointer">
               {userData.nickname}{" "}
               {showBlog.userId == comments.userId ? (
@@ -66,6 +89,28 @@ const Comment = ({ comments, showBlog }) => {
             <p className="text-[13.5px] text-[#242424]">{comments.content}</p>
             <span className="text-[12px]">{timeAgo(comments.created_at)}</span>
           </div>
+          {comments.userId == user.id ? (
+            <button
+              onClick={() => setDeleteButton(!deleteButton)}
+              className="w-7 h-7 relative rounded-md transition-all active:bg-gray-300 flex justify-center items-center"
+            >
+              <i className="bx bx-dots-vertical-rounded text-lg"></i>
+              <ul
+                className={`absolute right-0 top-full bg-white shadow p-1 rounded-md${
+                  deleteButton ? "" : " hidden"
+                }`}
+              >
+                <li
+                  onClick={() => deleteComment(comments.id)}
+                  className="flex items-center gap-1 text-sm text-gray-500 hover:bg-gray-200 px-1 transition-all rounded-md"
+                >
+                  <i className="bx bx-trash text-lg "></i> Delete
+                </li>
+              </ul>
+            </button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     )

@@ -12,12 +12,13 @@ const ViewContent = () => {
   const { user } = useAuth();
   const [comments, setComments] = useState([]);
   const [ownerPostData, setOwnerPostData] = useState({});
+  const [reRenderComments, setReRenderComments] = useState(false);
   const closeModal = () => {
     setShowContentPopUp(false);
   };
   const postComment = async () => {
     const comment = {
-      id: Date.now(),
+      id: `${Date.now()}`,
       postId: PostId,
       userId: user.id,
       content: commentValue,
@@ -75,7 +76,7 @@ const ViewContent = () => {
       }
     };
     getData();
-  }, [PostId]);
+  }, [PostId, reRenderComments]);
 
   const { id, title, description, thumbnail, category } = showBlog;
 
@@ -194,6 +195,8 @@ const ViewContent = () => {
                           key={comment.id}
                           comments={comment}
                           showBlog={showBlog}
+                          setReRenderComments={setReRenderComments}
+                          reRenderComments={reRenderComments}
                         />
                       );
                     })
