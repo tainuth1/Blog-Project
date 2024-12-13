@@ -12,6 +12,7 @@ import EditForm from "../EditForm";
 import Register from "../auth/Register";
 import Loading from "../Loading";
 import Profile from "../pages/Profile";
+import EditProfile from "../EditProfile";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -48,7 +49,9 @@ const AppRouters = () => {
               <Route path="edit/:EditId" element={<EditForm />} />
             </Route>
             <Route path="/settings" element={<Settings />} />
-            <Route path="/profile/:UserId" element={<Profile />} />
+            <Route path="/profile/:UserId" element={<Profile />}>
+              <Route path="edit" element={<EditProfile />} />
+            </Route>
           </Route>
         </Routes>
       </div>

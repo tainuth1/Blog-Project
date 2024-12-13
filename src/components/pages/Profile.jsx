@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
+import { AnimatePresence } from "motion/react";
 
 const Profile = () => {
   const { UserId } = useParams();
   const [userData, setUserData] = useState(null);
   const [topPost, setTopPost] = useState([]);
-
+  const [showEditProfile, setShowEditProfile] = useState(false);
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const responseUser = await fetch(`http://localhost:3000/users/${UserId}`);
+        const responseUser = await fetch(
+          `http://localhost:3000/users/${UserId}`
+        );
         if (!responseUser.ok) {
           throw new Error("Failed to fetch data from api");
         }
@@ -30,19 +33,47 @@ const Profile = () => {
     };
     getUserInfo();
   }, [UserId]);
+  if (!showEditProfile) {
+    window.history.pushState({}, "", `/profile/${UserId}`);
+  }
   return (
     <div>
       <div className="flex justify-between items-center ">
         <div className="flex items-center gap-5">
           <h1 className="font-semibold text-3xl text-gray-800">Profile</h1>
         </div>
+        <AnimatePresence
+          mode="wait"
+          onExitComplete={() => {
+            window.history.pushState({}, "", `/profile/${UserId}`);
+          }}
+        >
+          {showEditProfile && (
+            <Outlet context={{ UserId, setShowEditProfile }} />
+          )}
+        </AnimatePresence>
       </div>
-      {userData && <ProfileComponent userData={userData} topPost={topPost}/>}
+      {userData && (
+        <ProfileComponent
+          userData={userData}
+          topPost={topPost}
+          UserId={UserId}
+          setShowEditProfile={setShowEditProfile}
+        />
+      )}
     </div>
   );
 };
 
-const ProfileComponent = ({ userData, topPost }) => {
+const ProfileComponent = ({
+  userData,
+  topPost,
+  UserId,
+  setShowEditProfile,
+}) => {
+  const handleFormShow = () => {
+    setShowEditProfile(true);
+  };
   return (
     <div className="grid grid-cols-3 mt-4 gap-4">
       <div className="col-span-1">
@@ -64,12 +95,20 @@ const ProfileComponent = ({ userData, topPost }) => {
             @{userData.username}
           </p>
           <div className="flex justify-center items-center gap-2 mt-3">
-            <button className=" bg-blue-500 text-white px-4 py-2 transition-all rounded-lg hover:bg-blue-600 active:scale-[0.95]">
+            <Link
+              to="/create-post"
+              onClick={() => setShowEditProfile(!showEditProfile)}
+              className=" bg-blue-500 text-white px-4 py-2 transition-all rounded-lg hover:bg-blue-600 active:scale-[0.95]"
+            >
               Create Post
-            </button>
-            <button className=" bg-blue-500 text-white px-4 py-2 transition-all rounded-lg hover:bg-blue-600 active:scale-[0.95]">
+            </Link>
+            <Link
+              to={`/profile/${UserId}/edit`}
+              onClick={handleFormShow}
+              className=" bg-blue-500 text-white px-4 py-2 transition-all rounded-lg hover:bg-blue-600 active:scale-[0.95]"
+            >
               Edit Profile
-            </button>
+            </Link>
           </div>
           <div className="w-full mt-4">
             <div className="border px-3 py-2 rounded-xl shadow-inner bg-[#f8f9fe]">

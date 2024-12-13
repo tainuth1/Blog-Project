@@ -23,7 +23,7 @@
     {
       "id": "1732782327290",
       "title": "All Javascript Concepts ( A-Z ) Basic to Advanced",
-      "category": "Technology",
+      "category": "Programming",
       "description": "In this post, I’ve covered key JavaScript concepts ranging from basic topics like variables and data types, to more advanced concepts such as closures, promises, asynchronous programming, object-oriented programming, event handling, and ES6+ features like arrow functions, destructuring, and modules.",
       "thumbnail": "https://media.daily.dev/image/upload/s--no2yCEHF--/f_auto/v1731865715/posts/HBJQLUdFi",
       "userId": 1733572060859,
@@ -50,7 +50,7 @@
     {
       "id": "1732793317002",
       "title": "How to use ORMs (Prisma / Drizzle / Knex.js) in a TypeScript backend built with Encore.ts",
-      "category": "Programming",
+      "category": "Gaming",
       "description": "Learn how to use ORMs such as Prisma, Drizzle, and Knex.js with Encore.ts in a TypeScript backend. The guide covers creating and managing databases locally, deploying apps to the cloud, and using SQL and ORM approaches for database interactions. Example configurations and code snippets for each ORM are provided along with deployment instructions for Docker and cloud platforms.",
       "thumbnail": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F2x9103e05f6j4f5cqj5g.png",
       "userId": 1733572060859,
@@ -111,20 +111,5 @@
       "created_at": "2024-12-07T14:28:04.639Z"
     }
   ],
-  "comments": [
-    {
-      "id": "1733842611844",
-      "postId": "1732782327290",
-      "userId": "1733579359717",
-      "content": "Nice content.😍",
-      "created_at": "2024-12-10T14:56:51.844Z"
-    },
-    {
-      "id": "1733992791339",
-      "postId": "1733581684639",
-      "userId": "1733572060859",
-      "content": "Lol?",
-      "created_at": "2024-12-12T08:39:51.339Z"
-    }
-  ]
+  "comments": []
 }
