@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
+import SuccessAlert from "../SuccessAlert";
+import FailAlert from "../FailAlert";
 
 const Profile = () => {
   const { UserId } = useParams();
   const [userData, setUserData] = useState(null);
   const [topPost, setTopPost] = useState([]);
   const [showEditProfile, setShowEditProfile] = useState(false);
+  const [alert, setAlert] = useState({ message: "", type: "" });
   useEffect(() => {
     const getUserInfo = async () => {
       try {
@@ -32,7 +35,10 @@ const Profile = () => {
       }
     };
     getUserInfo();
-  }, [UserId]);
+  }, [UserId, alert]);
+  const closeAlert = () => {
+    setAlert({ message: "", type: "" });
+  };
   if (!showEditProfile) {
     window.history.pushState({}, "", `/profile/${UserId}`);
   }
@@ -42,6 +48,24 @@ const Profile = () => {
         <div className="flex items-center gap-5">
           <h1 className="font-semibold text-3xl text-gray-800">Profile</h1>
         </div>
+        <AnimatePresence>
+          {alert.message && (
+            <div>
+              {alert.type === "success" ? (
+                <div className="fixed top-8 left-[600px]">
+                  <SuccessAlert
+                    message={alert.message}
+                    closeAlert={closeAlert}
+                  />
+                </div>
+              ) : (
+                <div className="fixed top-8 left-[600px]">
+                  <FailAlert message={alert.message} closeAlert={closeAlert} />
+                </div>
+              )}
+            </div>
+          )}
+        </AnimatePresence>
         <AnimatePresence
           mode="wait"
           onExitComplete={() => {
@@ -49,7 +73,7 @@ const Profile = () => {
           }}
         >
           {showEditProfile && (
-            <Outlet context={{ UserId, setShowEditProfile }} />
+            <Outlet context={{ UserId, setShowEditProfile, setAlert }} />
           )}
         </AnimatePresence>
       </div>
@@ -84,9 +108,13 @@ const ProfileComponent = ({
               src={userData.profile}
               alt=""
             />
-            <button className="absolute top-2 right-2 bg-white shadow-2xl border w-8 h-8 flex justify-center items-center rounded-full text-gray-600">
+            <Link
+              to={`/profile/${UserId}/edit`}
+              onClick={handleFormShow}
+              className="absolute top-2 right-2 bg-white shadow-2xl border w-8 h-8 flex justify-center items-center rounded-full text-gray-600"
+            >
               <i className="bx bxs-pencil"></i>
-            </button>
+            </Link>
           </div>
           <h2 className="text-center text-xl font-semibold text-gray-800">
             {userData.nickname}
@@ -97,7 +125,6 @@ const ProfileComponent = ({
           <div className="flex justify-center items-center gap-2 mt-3">
             <Link
               to="/create-post"
-              onClick={() => setShowEditProfile(!showEditProfile)}
               className=" bg-blue-500 text-white px-4 py-2 transition-all rounded-lg hover:bg-blue-600 active:scale-[0.95]"
             >
               Create Post

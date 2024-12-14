@@ -2,20 +2,20 @@
   "users": [
     {
       "id": "1733572060859",
-      "nickname": "tainuth1",
+      "nickname": "Tai Nuth",
       "username": "tainuth1",
       "email": "tainuth1@gmail.com",
       "password": "111111",
-      "profile": "https://tr.rbxcdn.com/3d2bcbcee906d2a65452ea78b51355f6/420/420/Hat/Png",
-      "created_at": "2024-12-07T11:47:40.859Z"
+      "profile": "https://i.pinimg.com/originals/67/2d/f3/672df3680d144131ddb5fa050b73cd59.jpg",
+      "created_at": "2024-12-07T13:49:19.717Z"
     },
     {
       "id": "1733579359717",
-      "nickname": "nuth123",
+      "nickname": "Nuth2.0",
       "username": "nuth123",
       "email": "nuth123@gmail.com",
       "password": "111111",
-      "profile": "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg",
+      "profile": "https://i.pinimg.com/736x/60/48/cc/6048cc165c04b09f5ffa3aa36d123881.jpg",
       "created_at": "2024-12-07T13:49:19.717Z"
     }
   ],
@@ -77,7 +77,7 @@
     {
       "id": "1733069599207",
       "title": "Efficient Dynamic Forms with ngComponentOutlet in Angular",
-      "category": "Working",
+      "category": "International",
       "description": "Angular's ngComponentOutlet simplifies dynamic component loading, allowing developers to create flexible and reusable components. With the new input binding introduced in Angular 17, developers can now handle dynamic nested forms more efficiently without manually declaring injectors. Key benefits include faster development cycles, reduced bundle sizes, improved performance, scalability, and easier maintenance. ",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/b57530449daa2377dba81e56a9538bb7?_a=AQAEuiZ",
       "userId": 1733572060859,
@@ -104,7 +104,7 @@
     {
       "id": "1733581684639",
       "title": "20 AI Coding Tools To Know in 2025",
-      "category": "Technology",
+      "category": "News",
       "description": "This post reviews 20 AI coding tools available as of 2025, including GitHub Copilot, Cursor, Replit, Hope AI, and more. These tools aim to enhance developer productivity, provide intelligent code suggestions, and automate numerous coding tasks. Special emphasis is placed on tools that create managed, reusable code components and offer organizational controls and analytics.",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/bda075927e1dc5501fe85b7afd5155de?_a=AQAEuj9",
       "userId": 1733579359717,
