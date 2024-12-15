@@ -14,6 +14,7 @@ const CreatePost = () => {
     description: "",
     thumbnail: "",
     userId: user.id,
+    likes: [],
     created_at: new Date().toISOString(),
   };
   const [imagePreview, setImagePreview] = useState("");

@@ -10,6 +10,7 @@ const Profile = () => {
   const [topPost, setTopPost] = useState([]);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [alert, setAlert] = useState({ message: "", type: "" });
+  const [allPosts, setAllPost] = useState();
   useEffect(() => {
     const getUserInfo = async () => {
       try {
@@ -19,7 +20,14 @@ const Profile = () => {
         if (!responseUser.ok) {
           throw new Error("Failed to fetch data from api");
         }
-
+        const getNumberOfPosts = await fetch(
+          `http://localhost:3000/posts?userId=${UserId}`
+        );
+        if (!getNumberOfPosts.ok) {
+          throw new Error("Failed to get number of post");
+        }
+        const allPost = await getNumberOfPosts.json();
+        setAllPost(allPost);
         const dataUser = await responseUser.json();
         setUserData(dataUser);
         const responsePost = await fetch(
@@ -83,6 +91,7 @@ const Profile = () => {
           topPost={topPost}
           UserId={UserId}
           setShowEditProfile={setShowEditProfile}
+          allPosts={allPosts}
         />
       )}
     </div>
@@ -94,9 +103,15 @@ const ProfileComponent = ({
   topPost,
   UserId,
   setShowEditProfile,
+  allPosts,
 }) => {
   const handleFormShow = () => {
     setShowEditProfile(true);
+  };
+  const totalLike = () => {
+    return allPosts.reduce((total, next) => {
+      return total + next.likes.length;
+    }, 0);
   };
   return (
     <div className="grid grid-cols-3 mt-4 gap-4">
@@ -181,7 +196,7 @@ const ProfileComponent = ({
               </div>
               <div className="w-2/4">
                 <h3 className="text-xl font-semibold text-gray-800">Posted</h3>
-                <p className="text-md text-blue-600">10</p>
+                <p className="text-md text-blue-600">{allPosts.length}</p>
               </div>
             </div>
             <div className="col-span-1 w-full h-28 flex items-center justify-center border rounded-2xl bg-white shadow-lg cursor-pointer transition-all hover:scale-[1.04]">
@@ -194,7 +209,7 @@ const ProfileComponent = ({
               </div>
               <div className="w-2/4">
                 <h3 className="text-xl font-semibold text-gray-800">Like</h3>
-                <p className="text-md text-blue-600">10</p>
+                <p className="text-md text-blue-600">{totalLike()}</p>
               </div>
             </div>
           </div>
