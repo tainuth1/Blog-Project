@@ -114,18 +114,25 @@ const ViewContent = () => {
 
   const followUser = async () => {
     try {
+      // Add to followings array (current user follows another user)
+      const updatedFollowings = [
+        ...new Set([...user.followings, showBlog.userId]),
+      ];
       const response1 = await fetch(`http://localhost:3000/users/${user.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          followings: [...user.followings, showBlog.userId],
-        }),
+        body: JSON.stringify({ followings: updatedFollowings }),
       });
       if (!response1.ok) {
         throw new Error("Failed to update following list.");
       }
+
+      // Add to followers array (another user gains a new follower)
+      const updatedFollowers = [
+        ...new Set([...ownerPostData.followers, user.id]),
+      ];
       const response2 = await fetch(
         `http://localhost:3000/users/${showBlog.userId}`,
         {
@@ -133,39 +140,50 @@ const ViewContent = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            followers: [...user.followers, user.id],
-          }),
+          body: JSON.stringify({ followers: updatedFollowers }),
         }
       );
+      if (!response2.ok) {
+        throw new Error("Failed to update followers list.");
+      }
+
+      setOwnerPostData((prev) => ({
+        ...prev,
+        followers: updatedFollowers,
+      }));
+
       setAlert(true);
       setAlertMessage("Following");
       setTimeout(() => {
         setAlert(false);
         setAlertMessage("");
       }, 2500);
-      if (!response2.ok) {
-        throw new Error("Failed to update followers list.");
-      }
     } catch (error) {
-      console.log("Following Error : " + error);
+      console.error("Following Error:", error);
     }
   };
 
   const unfollowUser = async () => {
     try {
+      // Remove from followings array (current user unfollows another user)
+      const updatedFollowings = user.followings.filter(
+        (id) => id !== showBlog.userId
+      );
       const response1 = await fetch(`http://localhost:3000/users/${user.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          followings: user.followings.filter((id) => id != showBlog.userId),
-        }),
+        body: JSON.stringify({ followings: updatedFollowings }),
       });
       if (!response1.ok) {
         throw new Error("Failed to unfollow!");
       }
+
+      // Remove from followers array (another user loses a follower)
+      const updatedFollowers = ownerPostData.followers.filter(
+        (id) => id !== user.id
+      );
       const response2 = await fetch(
         `http://localhost:3000/users/${showBlog.userId}`,
         {
@@ -173,14 +191,19 @@ const ViewContent = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            followers: user.followers.filter((id) => id != user.id),
-          }),
+          body: JSON.stringify({ followers: updatedFollowers }),
         }
       );
       if (!response2.ok) {
         throw new Error("Failed to unfollow!");
       }
+
+      // Update the UI
+      setOwnerPostData((prev) => ({
+        ...prev,
+        followers: updatedFollowers,
+      }));
+
       setAlert(true);
       setAlertMessage("Unfollowed");
       setTimeout(() => {
@@ -188,7 +211,7 @@ const ViewContent = () => {
         setAlertMessage("");
       }, 2500);
     } catch (error) {
-      console.log("Unfollow Error : " + error);
+      console.error("Unfollow Error:", error);
     }
   };
 
