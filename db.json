@@ -2,11 +2,15 @@
   "users": [
     {
       "id": "1733572060859",
-      "nickname": "Tai Nuth",
+      "nickname": "Shroud",
       "username": "tainuth1",
       "email": "tainuth1@gmail.com",
       "password": "111111",
       "profile": "https://i.pinimg.com/originals/67/2d/f3/672df3680d144131ddb5fa050b73cd59.jpg",
+      "followers": [],
+      "followings": [
+        1733579359717
+      ],
       "created_at": "2024-12-07T13:49:19.717Z"
     },
     {
@@ -16,7 +20,22 @@
       "email": "nuth123@gmail.com",
       "password": "111111",
       "profile": "https://i.pinimg.com/736x/60/48/cc/6048cc165c04b09f5ffa3aa36d123881.jpg",
+      "followers": [
+        "1733572060859"
+      ],
+      "followings": [],
       "created_at": "2024-12-07T13:49:19.717Z"
+    },
+    {
+      "id": "1734337957632",
+      "nickname": "Nuth3.0",
+      "username": "nuth1234",
+      "email": "nuth1@gmail.com",
+      "password": "111111",
+      "profile": "https://i1.sndcdn.com/avatars-000625811013-4mtr7o-t500x500.jpg",
+      "followers": [],
+      "followings": [],
+      "created_at": "2024-12-16T08:32:37.632Z"
     }
   ],
   "posts": [
@@ -29,9 +48,11 @@
       "userId": 1733572060859,
       "likes": [
         "1733579359717",
+        1734337957632
+      ],
+      "favorites": [
         "1733572060859"
       ],
-      "favorites": [],
       "created_at": "2024-11-28T08:25:27.290Z"
     },
     {
@@ -111,7 +132,7 @@
     {
       "id": "1733138203971",
       "title": "Ng-News 24/45: Rationale behind (potential) Authoring Format",
-      "category": "Jobs",
+      "category": "Programming",
       "description": "The Angular team is exploring new authoring formats due to the time-consuming adaptation of TypeScript functionality in templates, which is not true TypeScript. At ng-Poland, this reasoning was clarified. The team also shared updates on introducing Signals into various parts of Angular, such as forms and the router.",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/4ba3f7b0878b9c3f92b0240405c26c8a?_a=AQAEuj9",
       "userId": 1733572060859,
@@ -139,10 +160,22 @@
       "description": "This post reviews 20 AI coding tools available as of 2025, including GitHub Copilot, Cursor, Replit, Hope AI, and more. These tools aim to enhance developer productivity, provide intelligent code suggestions, and automate numerous coding tasks. Special emphasis is placed on tools that create managed, reusable code components and offer organizational controls and analytics.",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/bda075927e1dc5501fe85b7afd5155de?_a=AQAEuj9",
       "userId": 1733579359717,
-      "likes": [],
-      "favorites": [],
+      "likes": [
+        "1733572060859"
+      ],
+      "favorites": [
+        "1733572060859"
+      ],
       "created_at": "2024-12-07T14:28:04.639Z"
     }
   ],
-  "comments": []
+  "comments": [
+    {
+      "id": "1734338195144",
+      "postId": "1732782327290",
+      "userId": 1734337957632,
+      "content": "JavaScript❤️",
+      "created_at": "2024-12-16T08:36:35.144Z"
+    }
+  ]
 }

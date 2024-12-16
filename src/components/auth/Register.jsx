@@ -14,6 +14,8 @@ const Register = () => {
     confirm_password: "",
     profile:
       "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg",
+    followers: [],
+    followings: [],
     created_at: new Date().toISOString(),
   };
 
@@ -183,14 +185,24 @@ const Register = () => {
                 </Link>
               </div>
               <div className="flex justify-between mt-4">
-                <button type="button" className="w-full bg-white text-gray-600 border border-gray-300 rounded-lg py-1 px-4 flex items-center justify-center hover:bg-gray-50 active:scale-[0.96]">
-                  <img className="w-7 h-7 object-cover mr-2" src="https://imagepng.org/wp-content/uploads/2019/08/google-icon.png" alt="" />
+                <button
+                  type="button"
+                  className="w-full bg-white text-gray-600 border border-gray-300 rounded-lg py-1 px-4 flex items-center justify-center hover:bg-gray-50 active:scale-[0.96]"
+                >
+                  <img
+                    className="w-7 h-7 object-cover mr-2"
+                    src="https://imagepng.org/wp-content/uploads/2019/08/google-icon.png"
+                    alt=""
+                  />
                   {/* <i className="bx bxl-google mr-2 text-3xl"></i> */}
-                   Google
+                  Google
                 </button>
-                <button type="button" className="w-full bg-white border border-gray-300 rounded-lg py-1 px-4 flex items-center justify-center hover:bg-gray-50 active:scale-[0.96] ml-2">
+                <button
+                  type="button"
+                  className="w-full bg-white border border-gray-300 rounded-lg py-1 px-4 flex items-center justify-center hover:bg-gray-50 active:scale-[0.96] ml-2"
+                >
                   {/* <img className="w-7 h-7 object-cover mr-2" src="https://www.pngarts.com/files/8/Github-Logo-Transparent-Background-PNG.png" alt="" /> */}
-                  <i className="bx bxl-github mr-2 text-3xl"></i> 
+                  <i className="bx bxl-github mr-2 text-3xl"></i>
                   GitHub
                 </button>
               </div>

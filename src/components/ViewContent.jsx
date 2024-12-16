@@ -112,6 +112,86 @@ const ViewContent = () => {
     return showBlog.favorites.includes(user.id) ? "text-yellow-500" : "";
   };
 
+  const followUser = async () => {
+    try {
+      const response1 = await fetch(`http://localhost:3000/users/${user.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          followings: [...user.followings, showBlog.userId],
+        }),
+      });
+      if (!response1.ok) {
+        throw new Error("Failed to update following list.");
+      }
+      const response2 = await fetch(
+        `http://localhost:3000/users/${showBlog.userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            followers: [...user.followers, user.id],
+          }),
+        }
+      );
+      setAlert(true);
+      setAlertMessage("Following");
+      setTimeout(() => {
+        setAlert(false);
+        setAlertMessage("");
+      }, 2500);
+      if (!response2.ok) {
+        throw new Error("Failed to update followers list.");
+      }
+    } catch (error) {
+      console.log("Following Error : " + error);
+    }
+  };
+
+  const unfollowUser = async () => {
+    try {
+      const response1 = await fetch(`http://localhost:3000/users/${user.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          followings: user.followings.filter((id) => id != showBlog.userId),
+        }),
+      });
+      if (!response1.ok) {
+        throw new Error("Failed to unfollow!");
+      }
+      const response2 = await fetch(
+        `http://localhost:3000/users/${showBlog.userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            followers: user.followers.filter((id) => id != user.id),
+          }),
+        }
+      );
+      if (!response2.ok) {
+        throw new Error("Failed to unfollow!");
+      }
+      setAlert(true);
+      setAlertMessage("Unfollowed");
+      setTimeout(() => {
+        setAlert(false);
+        setAlertMessage("");
+      }, 2500);
+    } catch (error) {
+      console.log("Unfollow Error : " + error);
+    }
+  };
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -152,6 +232,24 @@ const ViewContent = () => {
     ? showBlog
     : "";
 
+  const followButton = async () => {
+    const isFollowing = ownerPostData.followers.includes(user.id);
+    try {
+      if (isFollowing) {
+        await unfollowUser();
+      } else {
+        await followUser();
+      }
+      setOwnerPostData((prev) => ({
+        ...prev,
+        followers: isFollowing
+          ? prev.followers.filter((id) => id !== user.id)
+          : [...prev.followers, user.id],
+      }));
+    } catch (error) {
+      console.error("Failed to toggle follow status:", error);
+    }
+  };
   return showBlog ? (
     <motion.div
       initial={{ backgroundColor: "rgba(0, 0, 0, 0)" }}
@@ -174,7 +272,7 @@ const ViewContent = () => {
               <div className="flex items-center gap-1">
                 <div className="w-4 h-4 rounded-full bg-[#FF5F56] cursor-pointer"></div>
                 <div className="w-4 h-4 rounded-full bg-[#FFBD2E] cursor-pointer"></div>
-                <div className="w-4 h-4 rounded-full bg-[#27c93f] cursor-pointer"></div>
+                <div className="w-4 h-4 roundxed-full bg-[#27c93f] cursor-pointer"></div>
               </div>
               <button
                 onClick={closeModal}
@@ -188,7 +286,7 @@ const ViewContent = () => {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    className="absolute left-[45%] px-5 py-2 text-gray-800 rounded-lg bg-black bg-opacity-20"
+                    className="absolute left-[45%] px-5 py-2 text-white rounded-lg bg-[#212121] bg-opacity-80"
                   >
                     {alertMessage}
                   </motion.div>
@@ -236,9 +334,18 @@ const ViewContent = () => {
                     </p>
                   </div>
                 </div>
-                <button className="border-2 border-blue-600 px-6 py-2 rounded-lg text-blue-700 active:scale-[0.95]">
-                  Follow
-                </button>
+                {showBlog.userId != user.id ? (
+                  <button
+                    onClick={followButton}
+                    className="border-2 border-blue-600 px-6 py-2 rounded-lg text-blue-700 active:scale-[0.95]"
+                  >
+                    {ownerPostData.followers.includes(user.id)
+                      ? "Unfollow"
+                      : "Follow"}
+                  </button>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="mt-7 flex justify-between items-center py-2 border-b border-gray-500">
                 <div className="flex items-center gap-1">

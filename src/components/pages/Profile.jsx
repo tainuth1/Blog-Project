@@ -3,9 +3,11 @@ import { Link, Outlet, useParams } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import SuccessAlert from "../SuccessAlert";
 import FailAlert from "../FailAlert";
+import { useAuth } from "../auth/AuthProvider";
 
 const Profile = () => {
   const { UserId } = useParams();
+  const { user } = useAuth();
   const [userData, setUserData] = useState(null);
   const [topPost, setTopPost] = useState([]);
   const [showEditProfile, setShowEditProfile] = useState(false);
@@ -90,6 +92,7 @@ const Profile = () => {
           userData={userData}
           topPost={topPost}
           UserId={UserId}
+          user={user}
           setShowEditProfile={setShowEditProfile}
           allPosts={allPosts}
         />
@@ -100,6 +103,7 @@ const Profile = () => {
 
 const ProfileComponent = ({
   userData,
+  user,
   topPost,
   UserId,
   setShowEditProfile,
@@ -113,6 +117,7 @@ const ProfileComponent = ({
       return total + next.likes.length;
     }, 0);
   };
+
   return (
     <div className="grid grid-cols-3 mt-4 gap-4">
       <div className="col-span-1">
@@ -137,21 +142,26 @@ const ProfileComponent = ({
           <p className="text-center text-sm text-gray-600">
             @{userData.username}
           </p>
-          <div className="flex justify-center items-center gap-2 mt-3">
-            <Link
-              to="/create-post"
-              className=" bg-blue-500 text-white px-4 py-2 transition-all rounded-lg hover:bg-blue-600 active:scale-[0.95]"
-            >
-              Create Post
-            </Link>
-            <Link
-              to={`/profile/${UserId}/edit`}
-              onClick={handleFormShow}
-              className=" bg-blue-500 text-white px-4 py-2 transition-all rounded-lg hover:bg-blue-600 active:scale-[0.95]"
-            >
-              Edit Profile
-            </Link>
-          </div>
+          {user.id == UserId ? (
+            <div className="flex justify-center items-center gap-2 mt-3">
+              <Link
+                to="/create-post"
+                className=" bg-blue-500 text-white px-4 py-2 transition-all rounded-lg hover:bg-blue-600 active:scale-[0.95]"
+              >
+                Create Post
+              </Link>
+              <Link
+                to={`/profile/${UserId}/edit`}
+                onClick={handleFormShow}
+                className=" bg-blue-500 text-white px-4 py-2 transition-all rounded-lg hover:bg-blue-600 active:scale-[0.95]"
+              >
+                Edit Profile
+              </Link>
+            </div>
+          ) : (
+            ""
+          )}
+
           <div className="w-full mt-4">
             <div className="border px-3 py-2 rounded-xl shadow-inner bg-[#f8f9fe]">
               <p className="text-[11px] text-gray-500">Nickname</p>
@@ -163,7 +173,7 @@ const ProfileComponent = ({
             </div>
             <div className="border px-3 py-2 rounded-xl shadow-inner bg-[#f8f9fe] mt-2">
               <p className="text-[11px] text-gray-500">Email</p>
-              <p className="text-sm text-gray-600">{userData.email}</p>
+              <p className="text-sm text-gray-600">{user.id == UserId ? userData.email : "********@gamil.com"}</p>
             </div>
           </div>
         </div>
@@ -183,7 +193,9 @@ const ProfileComponent = ({
                 <h3 className="text-xl font-semibold text-gray-800">
                   Follower
                 </h3>
-                <p className="text-md text-blue-600">10</p>
+                <p className="text-md text-blue-600">
+                  {userData.followers.length}
+                </p>
               </div>
             </div>
             <div className="col-span-1 w-full h-28 flex items-center justify-center border rounded-2xl bg-white shadow-lg cursor-pointer transition-all hover:scale-[1.04]">
