@@ -9,7 +9,6 @@ const Profile = () => {
   const { UserId } = useParams();
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
-  const [topPost, setTopPost] = useState([]);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [alert, setAlert] = useState({ message: "", type: "" });
   const [allPosts, setAllPost] = useState();
@@ -39,7 +38,6 @@ const Profile = () => {
           throw new Error("failed to fetch posts from api");
         }
         const dataPost = await responsePost.json();
-        setTopPost(dataPost);
       } catch (error) {
         console.log(error);
       }
@@ -90,7 +88,6 @@ const Profile = () => {
       {userData && (
         <ProfileComponent
           userData={userData}
-          topPost={topPost}
           UserId={UserId}
           user={user}
           setShowEditProfile={setShowEditProfile}
@@ -104,11 +101,19 @@ const Profile = () => {
 const ProfileComponent = ({
   userData,
   user,
-  topPost,
   UserId,
   setShowEditProfile,
   allPosts,
 }) => {
+  const [activeTab, setActiveTab] = useState("posts");
+  const tabs = [
+    { id: "posts", label: "My Posts", icon: "bxs-collection" },
+    { id: "following", label: "Following", icon: "bxs-user" },
+    { id: "followers", label: "Followers", icon: "bxs-user-circle" },
+    { id: "favorites", label: "Favorites", icon: "bxs-bookmark" },
+    { id: "likes", label: "Likes", icon: "bxs-heart" },
+  ];
+
   const handleFormShow = () => {
     setShowEditProfile(true);
   };
@@ -161,7 +166,14 @@ const ProfileComponent = ({
           ) : (
             ""
           )}
-
+          <div className="w-full flex justify-evenly mt-3">
+            <button className="text-gray-700 transition-all hover:underline">
+              {userData.followings.length} Following
+            </button>
+            <button className="text-gray-700 transition-all hover:underline">
+              {userData.followers.length} Followers
+            </button>
+          </div>
           <div className="w-full mt-4">
             <div className="border px-3 py-2 rounded-xl shadow-inner bg-[#f8f9fe]">
               <p className="text-[11px] text-gray-500">Nickname</p>
@@ -173,7 +185,9 @@ const ProfileComponent = ({
             </div>
             <div className="border px-3 py-2 rounded-xl shadow-inner bg-[#f8f9fe] mt-2">
               <p className="text-[11px] text-gray-500">Email</p>
-              <p className="text-sm text-gray-600">{user.id == UserId ? userData.email : "********@gamil.com"}</p>
+              <p className="text-sm text-gray-600">
+                {user.id == UserId ? userData.email : "********@gamil.com"}
+              </p>
             </div>
           </div>
         </div>
@@ -226,46 +240,39 @@ const ProfileComponent = ({
             </div>
           </div>
           <div className="w-full bg-white border shadow-lg rounded-2xl mt-4 p-4">
-            <div className="flex justify-between items-center ">
-              <div className="flex items-center gap-5">
-                <h1 className="font-semibold text-lg text-blue-600">
-                  Top Post
-                </h1>
-              </div>
+            <div className="border-b border-gray-200 dark:border-gray-700">
+              <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
+                {tabs.map((tab) => (
+                  <li className="me-2" key={tab.id}>
+                    <button
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`inline-flex items-center gap-2 justify-center p-4 ${
+                        activeTab === tab.id
+                          ? "text-blue-600 border-b-2 border-blue-600"
+                          : "text-gray-500 border-b-2 border-transparent"
+                      } rounded-t-lg group`}
+                    >
+                      <i className={`bx ${tab.icon} text-lg`}></i>
+                      {tab.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="overflow-x-auto mt-2">
-              <table className="min-w-full text-left bg-white overflow-hidden rounded-lg dark:bg-gray-800">
-                <tbody>
-                  {topPost.map((post) => {
-                    return (
-                      <tr
-                        key={post.id}
-                        className="hover:bg-gray-50 dark:hover:bg-gray-700"
-                      >
-                        <td className="pl-3 pr-6 py-3 text-[14px] dark:text-gray-200">
-                          #{post.id}
-                        </td>
-                        <td className="px-6 py-3">
-                          <span className="w-[150px] text-[14px] inline-block whitespace-nowrap overflow-hidden text-ellipsis font-medium dark:text-gray-200">
-                            {post.title}
-                          </span>
-                        </td>
-                        <td className="px-6 py-3 text-[14px] text-gray-600 dark:text-gray-300">
-                          {post.category}
-                        </td>
-                        <td className="px-6 py-3 text-[14px] text-gray-600 dark:text-gray-300">
-                          1 Week ago
-                        </td>
-                        <td className="pl-6 py-4 flex items-center gap-2">
-                          <button className="px-3 py-1 bg-blue-500 text-white rounded-md active:scale-[0.97]">
-                            <i className="bx bx-right-arrow-alt"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+            <div className="mt-3">
+              {activeTab === "posts" && <div>Your posts will appear here.</div>}
+              {activeTab === "following" && (
+                <div>People you follow will appear here.</div>
+              )}
+              {activeTab === "followers" && (
+                <div>Your followers will appear here.</div>
+              )}
+              {activeTab === "favorites" && (
+                <div>Your favorite items will appear here.</div>
+              )}
+              {activeTab === "likes" && (
+                <div>Your liked items will appear here.</div>
+              )}
             </div>
           </div>
         </div>
