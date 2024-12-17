@@ -4,6 +4,11 @@ import { AnimatePresence } from "motion/react";
 import SuccessAlert from "../SuccessAlert";
 import FailAlert from "../FailAlert";
 import { useAuth } from "../auth/AuthProvider";
+import MyPost from "../profileTabsContents/MyPost";
+import Following from "../profileTabsContents/Following";
+import Followers from "../profileTabsContents/Followers";
+import Favorites from "../profileTabsContents/Favorites";
+import Likes from "../profileTabsContents/Likes";
 
 const Profile = () => {
   const { UserId } = useParams();
@@ -32,7 +37,7 @@ const Profile = () => {
         const dataUser = await responseUser.json();
         setUserData(dataUser);
         const responsePost = await fetch(
-          `http://localhost:3000/posts?userId=${dataUser.id}&_limit=5`
+          `http://localhost:3000/posts?userId=${dataUser.id}`
         );
         if (!responsePost.ok) {
           throw new Error("failed to fetch posts from api");
@@ -126,7 +131,7 @@ const ProfileComponent = ({
   return (
     <div className="grid grid-cols-3 mt-4 gap-4">
       <div className="col-span-1">
-        <div className="w-full bg-white shadow-xl border rounded-xl p-4">
+        <div className="w-full bg-white shadow-xl border rounded-xl p-4 sticky top-4">
           <div className="w-40 h-40 rounded-full shadow m-auto relative">
             <img
               className="w-full h-full rounded-full object-cover"
@@ -166,14 +171,6 @@ const ProfileComponent = ({
           ) : (
             ""
           )}
-          <div className="w-full flex justify-evenly mt-3">
-            <button className="text-gray-700 transition-all hover:underline">
-              {userData.followings.length} Following
-            </button>
-            <button className="text-gray-700 transition-all hover:underline">
-              {userData.followers.length} Followers
-            </button>
-          </div>
           <div className="w-full mt-4">
             <div className="border px-3 py-2 rounded-xl shadow-inner bg-[#f8f9fe]">
               <p className="text-[11px] text-gray-500">Nickname</p>
@@ -194,52 +191,7 @@ const ProfileComponent = ({
       </div>
       <div className="col-span-2">
         <div className="w-full">
-          <div className="grid grid-cols-3 gap-4">
-            <div className="col-span-1 w-full h-28 flex items-center justify-center border rounded-2xl bg-white shadow-lg cursor-pointer transition-all hover:scale-[1.04]">
-              <div className="w-2/4 flex justify-center items-center">
-                <img
-                  className="w-16"
-                  src="https://static.vecteezy.com/system/resources/previews/031/738/178/original/follower-icon-design-free-png.png"
-                  alt=""
-                />
-              </div>
-              <div className="w-2/4">
-                <h3 className="text-xl font-semibold text-gray-800">
-                  Follower
-                </h3>
-                <p className="text-md text-blue-600">
-                  {userData.followers.length}
-                </p>
-              </div>
-            </div>
-            <div className="col-span-1 w-full h-28 flex items-center justify-center border rounded-2xl bg-white shadow-lg cursor-pointer transition-all hover:scale-[1.04]">
-              <div className="w-2/4 flex justify-center items-center">
-                <img
-                  className="w-16"
-                  src="https://cdn-icons-png.flaticon.com/512/3391/3391272.png"
-                  alt=""
-                />
-              </div>
-              <div className="w-2/4">
-                <h3 className="text-xl font-semibold text-gray-800">Posted</h3>
-                <p className="text-md text-blue-600">{allPosts.length}</p>
-              </div>
-            </div>
-            <div className="col-span-1 w-full h-28 flex items-center justify-center border rounded-2xl bg-white shadow-lg cursor-pointer transition-all hover:scale-[1.04]">
-              <div className="w-2/4 flex justify-center items-center">
-                <img
-                  className="w-16"
-                  src="https://icon-library.com/images/facebook-like-icon-png/facebook-like-icon-png-10.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="w-2/4">
-                <h3 className="text-xl font-semibold text-gray-800">Like</h3>
-                <p className="text-md text-blue-600">{totalLike()}</p>
-              </div>
-            </div>
-          </div>
-          <div className="w-full bg-white border shadow-lg rounded-2xl mt-4 p-4">
+          <div className="w-full h-[690px] bg-white border shadow-lg rounded-2xl px-4 pb-4 sticky top-4">
             <div className="border-b border-gray-200 dark:border-gray-700">
               <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
                 {tabs.map((tab) => (
@@ -259,20 +211,12 @@ const ProfileComponent = ({
                 ))}
               </ul>
             </div>
-            <div className="mt-3">
-              {activeTab === "posts" && <div>Your posts will appear here.</div>}
-              {activeTab === "following" && (
-                <div>People you follow will appear here.</div>
-              )}
-              {activeTab === "followers" && (
-                <div>Your followers will appear here.</div>
-              )}
-              {activeTab === "favorites" && (
-                <div>Your favorite items will appear here.</div>
-              )}
-              {activeTab === "likes" && (
-                <div>Your liked items will appear here.</div>
-              )}
+            <div className="mt-3 h-[585px] overflow-y-scroll rounded-lg overflow-hidden">
+              {activeTab === "posts" && <MyPost />}
+              {activeTab === "following" && <Following />}
+              {activeTab === "followers" && <Followers />}
+              {activeTab === "favorites" && <Favorites />}
+              {activeTab === "likes" && <Likes />}
             </div>
           </div>
         </div>
