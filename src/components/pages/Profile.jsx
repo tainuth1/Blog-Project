@@ -16,7 +16,6 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [alert, setAlert] = useState({ message: "", type: "" });
-  const [allPosts, setAllPost] = useState();
   useEffect(() => {
     const getUserInfo = async () => {
       try {
@@ -26,23 +25,8 @@ const Profile = () => {
         if (!responseUser.ok) {
           throw new Error("Failed to fetch data from api");
         }
-        const getNumberOfPosts = await fetch(
-          `http://localhost:3000/posts?userId=${UserId}`
-        );
-        if (!getNumberOfPosts.ok) {
-          throw new Error("Failed to get number of post");
-        }
-        const allPost = await getNumberOfPosts.json();
-        setAllPost(allPost);
         const dataUser = await responseUser.json();
         setUserData(dataUser);
-        const responsePost = await fetch(
-          `http://localhost:3000/posts?userId=${dataUser.id}`
-        );
-        if (!responsePost.ok) {
-          throw new Error("failed to fetch posts from api");
-        }
-        const dataPost = await responsePost.json();
       } catch (error) {
         console.log(error);
       }
@@ -96,36 +80,36 @@ const Profile = () => {
           UserId={UserId}
           user={user}
           setShowEditProfile={setShowEditProfile}
-          allPosts={allPosts}
         />
       )}
     </div>
   );
 };
 
-const ProfileComponent = ({
-  userData,
-  user,
-  UserId,
-  setShowEditProfile,
-  allPosts,
-}) => {
+const ProfileComponent = ({ userData, user, UserId, setShowEditProfile }) => {
   const [activeTab, setActiveTab] = useState("posts");
   const tabs = [
-    { id: "posts", label: "My Posts", icon: "bxs-collection" },
-    { id: "following", label: "Following", icon: "bxs-user" },
-    { id: "followers", label: "Followers", icon: "bxs-user-circle" },
+    {
+      id: "posts",
+      label: "My Posts",
+      icon: "bxs-collection",
+    },
+    {
+      id: "following",
+      label: "Following",
+      icon: "bxs-user",
+    },
+    {
+      id: "followers",
+      label: "Followers",
+      icon: "bxs-user-circle",
+    },
     { id: "favorites", label: "Favorites", icon: "bxs-bookmark" },
     { id: "likes", label: "Likes", icon: "bxs-heart" },
   ];
 
   const handleFormShow = () => {
     setShowEditProfile(true);
-  };
-  const totalLike = () => {
-    return allPosts.reduce((total, next) => {
-      return total + next.likes.length;
-    }, 0);
   };
 
   return (
@@ -138,13 +122,17 @@ const ProfileComponent = ({
               src={userData.profile}
               alt=""
             />
-            <Link
-              to={`/profile/${UserId}/edit`}
-              onClick={handleFormShow}
-              className="absolute top-2 right-2 bg-white shadow-2xl border w-8 h-8 flex justify-center items-center rounded-full text-gray-600"
-            >
-              <i className="bx bxs-pencil"></i>
-            </Link>
+            {user.id == UserId ? (
+              <Link
+                to={`/profile/${UserId}/edit`}
+                onClick={handleFormShow}
+                className="absolute top-2 right-2 bg-white shadow-2xl border w-8 h-8 flex justify-center items-center rounded-full text-gray-600"
+              >
+                <i className="bx bxs-pencil"></i>
+              </Link>
+            ) : (
+              ""
+            )}
           </div>
           <h2 className="text-center text-xl font-semibold text-gray-800">
             {userData.nickname}

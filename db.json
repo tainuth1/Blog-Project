@@ -11,7 +11,9 @@
         "1733579359717",
         "1734337957632"
       ],
-      "followings": [],
+      "followings": [
+        1733579359717
+      ],
       "created_at": "2024-12-07T13:49:19.717Z"
     },
     {
@@ -21,7 +23,9 @@
       "email": "nuth123@gmail.com",
       "password": "111111",
       "profile": "https://i.pinimg.com/736x/60/48/cc/6048cc165c04b09f5ffa3aa36d123881.jpg",
-      "followers": [],
+      "followers": [
+        "1733572060859"
+      ],
       "followings": [
         1733572060859
       ],
@@ -51,7 +55,8 @@
       "userId": 1733572060859,
       "likes": [
         "1733579359717",
-        1734337957632
+        1734337957632,
+        "1733572060859"
       ],
       "favorites": [
         "1733572060859"
@@ -80,7 +85,9 @@
       "description": "TLDRThe latest Teams Toolkit for Visual Studio Code update, version 5.10.1, introduces several new features, enhancements, and crucial bug fixes. Notable updates include terminology changes, stability improvements for debug sessions, and schema validation fixes.",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/e2a12d25a6396f1a931ba1805f6b2927?_a=AQAEuj9",
       "userId": 1733572060859,
-      "likes": [],
+      "likes": [
+        "1733572060859"
+      ],
       "favorites": [],
       "created_at": "2024-11-28T11:24:28.521Z"
     },
@@ -94,9 +101,7 @@
       "likes": [
         "1733572060859"
       ],
-      "favorites": [
-        "1733572060859"
-      ],
+      "favorites": [],
       "created_at": "2024-11-28T11:28:37.002Z"
     },
     {
@@ -140,9 +145,7 @@
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/4ba3f7b0878b9c3f92b0240405c26c8a?_a=AQAEuj9",
       "userId": 1733572060859,
       "likes": [],
-      "favorites": [
-        "1733572060859"
-      ],
+      "favorites": [],
       "created_at": "2024-12-02T11:16:43.971Z"
     },
     {

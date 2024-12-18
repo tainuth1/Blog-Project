@@ -1,29 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const Followers = () => {
+  const { UserId } = useParams();
+  const [followers, setFollower] = useState([]);
+  useEffect(() => {
+    const getFollowerData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/users/${UserId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch data from API");
+        }
+        const userData = await response.json();
+        const followerPromise = userData.followers.map(async (userId) => {
+          const getUser = await fetch(`http://localhost:3000/users/${userId}`);
+          if (!getUser.ok) {
+            throw new Error("Failed to fetch follower data from API");
+          }
+          return getUser.json();
+        });
+        const followerData = await Promise.all(followerPromise);
+        setFollower(followerData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getFollowerData();
+  }, [UserId]);
   return (
     <div className="flex flex-col gap-5">
-      {[1, 2, 3, 4, 5, 7].map((a) => {
-        return <UserCard key={a} />;
+      {followers.map((follower) => {
+        return <UserCard key={follower.id} follower={follower} />;
       })}
     </div>
   );
 };
 
-const UserCard = () => {
+const UserCard = ({ follower }) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <div className="w-14 h-14 rounded-full overflow-hidden">
+        <Link
+          to={`/profile/${follower.id}`}
+          className="w-14 h-14 rounded-full overflow-hidden"
+        >
           <img
-            src="https://z-p3-scontent.fpnh5-3.fna.fbcdn.net/v/t39.30808-6/470217878_1261799578425388_3740335084416730488_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeHhmDYz4MOFNbC5vcy04KonuJzSLdIDaQy4nNIt0gNpDIav-1KuFowfEHUzGxcsSqAQCEdRrH8TLf5JGlZRn3hb&_nc_ohc=DW8SXjNsmN0Q7kNvgHvg6Jc&_nc_oc=Adh4IJ23UTVKLnFX3c1C5k71H6RKeMqRalVD2CzaLNhtN6l3m8dDCycDWF5jPn3rkx4&_nc_zt=23&_nc_ht=z-p3-scontent.fpnh5-3.fna&_nc_gid=Awys_H3VYnsWtKvjvNwm61T&oh=00_AYA-3PEZjnhKENpW40FqB88JWrVLjp0yX62MB_4k8bWA_Q&oe=67672EDA"
+            src={follower.profile}
             alt=""
             className="w-full h-full object-cover"
           />
-        </div>
+        </Link>
         <div className="">
-          <h2 className="text-gray-700 text-lg font-medium">James Arthur</h2>
-          <p className="text-gray-500 text-sm">jamesarthur</p>
+          <h2 className="text-gray-700 text-lg font-medium">
+            {follower.nickname}
+          </h2>
+          <p className="text-gray-500 text-sm">{follower.username}</p>
         </div>
       </div>
       <button className="px-6 py-2 border-2 border-gray-300 text-gray-700 active:scale-[0.97] rounded-lg">
