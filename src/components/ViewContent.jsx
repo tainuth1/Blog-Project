@@ -25,7 +25,7 @@ const ViewContent = () => {
     const comment = {
       id: `${Date.now()}`,
       postId: PostId,
-      userId: user.id,
+      userId: `${user.id}`,
       content: commentValue,
       created_at: new Date().toISOString(),
     };
@@ -112,109 +112,6 @@ const ViewContent = () => {
     return showBlog.favorites.includes(user.id) ? "text-yellow-500" : "";
   };
 
-  const followUser = async () => {
-    try {
-      // Add to followings array (current user follows another user)
-      const updatedFollowings = [
-        ...new Set([...user.followings, showBlog.userId]),
-      ];
-      const response1 = await fetch(`http://localhost:3000/users/${user.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ followings: updatedFollowings }),
-      });
-      if (!response1.ok) {
-        throw new Error("Failed to update following list.");
-      }
-
-      // Add to followers array (another user gains a new follower)
-      const updatedFollowers = [
-        ...new Set([...ownerPostData.followers, user.id]),
-      ];
-      const response2 = await fetch(
-        `http://localhost:3000/users/${showBlog.userId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ followers: updatedFollowers }),
-        }
-      );
-      if (!response2.ok) {
-        throw new Error("Failed to update followers list.");
-      }
-
-      setOwnerPostData((prev) => ({
-        ...prev,
-        followers: updatedFollowers,
-      }));
-
-      setAlert(true);
-      setAlertMessage("Following");
-      setTimeout(() => {
-        setAlert(false);
-        setAlertMessage("");
-      }, 2500);
-    } catch (error) {
-      console.error("Following Error:", error);
-    }
-  };
-
-  const unfollowUser = async () => {
-    try {
-      // Remove from followings array (current user unfollows another user)
-      const updatedFollowings = user.followings.filter(
-        (id) => id !== showBlog.userId
-      );
-      const response1 = await fetch(`http://localhost:3000/users/${user.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ followings: updatedFollowings }),
-      });
-      if (!response1.ok) {
-        throw new Error("Failed to unfollow!");
-      }
-
-      // Remove from followers array (another user loses a follower)
-      const updatedFollowers = ownerPostData.followers.filter(
-        (id) => id !== user.id
-      );
-      const response2 = await fetch(
-        `http://localhost:3000/users/${showBlog.userId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ followers: updatedFollowers }),
-        }
-      );
-      if (!response2.ok) {
-        throw new Error("Failed to unfollow!");
-      }
-
-      // Update the UI
-      setOwnerPostData((prev) => ({
-        ...prev,
-        followers: updatedFollowers,
-      }));
-
-      setAlert(true);
-      setAlertMessage("Unfollowed");
-      setTimeout(() => {
-        setAlert(false);
-        setAlertMessage("");
-      }, 2500);
-    } catch (error) {
-      console.error("Unfollow Error:", error);
-    }
-  };
-
   useEffect(() => {
     const getData = async () => {
       try {
@@ -254,25 +151,6 @@ const ViewContent = () => {
   const { id, title, description, thumbnail, category } = showBlog
     ? showBlog
     : "";
-
-  const followButton = async () => {
-    const isFollowing = ownerPostData.followers.includes(user.id);
-    try {
-      if (isFollowing) {
-        await unfollowUser();
-      } else {
-        await followUser();
-      }
-      setOwnerPostData((prev) => ({
-        ...prev,
-        followers: isFollowing
-          ? prev.followers.filter((id) => id !== user.id)
-          : [...prev.followers, user.id],
-      }));
-    } catch (error) {
-      console.error("Failed to toggle follow status:", error);
-    }
-  };
   return showBlog ? (
     <motion.div
       initial={{ backgroundColor: "rgba(0, 0, 0, 0)" }}
@@ -358,13 +236,8 @@ const ViewContent = () => {
                   </div>
                 </div>
                 {showBlog.userId != user.id ? (
-                  <button
-                    onClick={followButton}
-                    className="border-2 border-blue-600 px-6 py-2 rounded-lg text-blue-700 active:scale-[0.95]"
-                  >
-                    {ownerPostData.followers.includes(user.id)
-                      ? "Unfollow"
-                      : "Follow"}
+                  <button className="border-2 border-blue-600 px-6 py-2 rounded-lg text-blue-700 active:scale-[0.95]">
+                    Follow
                   </button>
                 ) : (
                   ""
