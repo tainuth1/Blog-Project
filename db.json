@@ -7,27 +7,11 @@
       "email": "tainuth1@gmail.com",
       "password": "111111",
       "profile": "https://z-p3-scontent.fpnh5-3.fna.fbcdn.net/v/t39.30808-6/470217878_1261799578425388_3740335084416730488_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeHhmDYz4MOFNbC5vcy04KonuJzSLdIDaQy4nNIt0gNpDIav-1KuFowfEHUzGxcsSqAQCEdRrH8TLf5JGlZRn3hb&_nc_ohc=DW8SXjNsmN0Q7kNvgHvg6Jc&_nc_oc=Adh4IJ23UTVKLnFX3c1C5k71H6RKeMqRalVD2CzaLNhtN6l3m8dDCycDWF5jPn3rkx4&_nc_zt=23&_nc_ht=z-p3-scontent.fpnh5-3.fna&_nc_gid=Awys_H3VYnsWtKvjvNwm61T&oh=00_AYA-3PEZjnhKENpW40FqB88JWrVLjp0yX62MB_4k8bWA_Q&oe=67672EDA",
-      "followers": [
-        "1733579359717",
+      "followers": [],
+      "following": [
+        "1734598272555",
+        "1734597773416",
         "1734337957632"
-      ],
-      "followings": [
-        1733579359717
-      ],
-      "created_at": "2024-12-07T13:49:19.717Z"
-    },
-    {
-      "id": "1733579359717",
-      "nickname": "Nuth2.0",
-      "username": "nuth123",
-      "email": "nuth123@gmail.com",
-      "password": "111111",
-      "profile": "https://i.pinimg.com/736x/60/48/cc/6048cc165c04b09f5ffa3aa36d123881.jpg",
-      "followers": [
-        "1733572060859"
-      ],
-      "followings": [
-        1733572060859
       ],
       "created_at": "2024-12-07T13:49:19.717Z"
     },
@@ -38,11 +22,37 @@
       "email": "nuth1@gmail.com",
       "password": "111111",
       "profile": "https://i1.sndcdn.com/avatars-000625811013-4mtr7o-t500x500.jpg",
-      "followers": [],
-      "followings": [
-        1733572060859
+      "followers": [
+        "1733572060859"
       ],
+      "following": [],
       "created_at": "2024-12-16T08:32:37.632Z"
+    },
+    {
+      "id": "1734597773416",
+      "nickname": "nuth123",
+      "username": "nuth123",
+      "email": "nuth123@gmail.com",
+      "password": "111111",
+      "profile": "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg",
+      "followers": [
+        "1733572060859"
+      ],
+      "following": [],
+      "created_at": "2024-12-19T08:42:53.416Z"
+    },
+    {
+      "id": "1734598272555",
+      "nickname": "shroud",
+      "username": "shroud",
+      "email": "shroud@gmail.com",
+      "password": "111111",
+      "profile": "https://avatars.githubusercontent.com/u/148186087?v=4",
+      "followers": [
+        "1733572060859"
+      ],
+      "following": [],
+      "created_at": "2024-12-19T08:51:12.555Z"
     }
   ],
   "posts": [
@@ -52,10 +62,10 @@
       "category": "Jobs",
       "description": "In this post, I’ve covered key JavaScript concepts ranging from basic topics like variables and data types, to more advanced concepts such as closures, promises, asynchronous programming, object-oriented programming, event handling, and ES6+ features like arrow functions, destructuring, and modules.",
       "thumbnail": "https://media.daily.dev/image/upload/s--no2yCEHF--/f_auto/v1731865715/posts/HBJQLUdFi",
-      "userId": 1733572060859,
+      "userId": "1733572060859",
       "likes": [
         "1733579359717",
-        1734337957632,
+        "1734337957632",
         "1733572060859"
       ],
       "favorites": [
@@ -69,7 +79,7 @@
       "category": "Programming",
       "description": "TLDRReact 18 introduces several impactful features aimed at improving concurrency, performance, and the overall developer experience. Key highlights include concurrent rendering for smoother UIs, automatic batching to reduce unnecessary renders, the useTransition hook to prioritize updates, and enhanced Suspense for simpler",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/129df34569b6ff49d19d7c68c1021e02?_a=AQAEuiZ",
-      "userId": 1733572060859,
+      "userId": "1733572060859",
       "likes": [
         "1733572060859"
       ],
@@ -84,7 +94,7 @@
       "category": "Meme",
       "description": "TLDRThe latest Teams Toolkit for Visual Studio Code update, version 5.10.1, introduces several new features, enhancements, and crucial bug fixes. Notable updates include terminology changes, stability improvements for debug sessions, and schema validation fixes.",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/e2a12d25a6396f1a931ba1805f6b2927?_a=AQAEuj9",
-      "userId": 1733572060859,
+      "userId": "1733572060859",
       "likes": [
         "1733572060859"
       ],
@@ -97,7 +107,7 @@
       "category": "Gaming",
       "description": "Learn how to use ORMs such as Prisma, Drizzle, and Knex.js with Encore.ts in a TypeScript backend. The guide covers creating and managing databases locally, deploying apps to the cloud, and using SQL and ORM approaches for database interactions. Example configurations and code snippets for each ORM are provided along with deployment instructions for Docker and cloud platforms.",
       "thumbnail": "https://media2.dev.to/dynamic/image/width=1000,height=420,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2F2x9103e05f6j4f5cqj5g.png",
-      "userId": 1733572060859,
+      "userId": "1733572060859",
       "likes": [
         "1733572060859"
       ],
@@ -110,7 +120,7 @@
       "category": "Gaming",
       "description": "LibreChat and Open WebUI are two open-source platforms that facilitate building secure, in-house AI systems. LibreChat is known for its enterprise-level authentication and flexibility, while Open WebUI offers streamlined user management and a variety of integrations. Both platforms, when integrated with Portkey, provide enhanced security, observability, and reliability for AI operations. ",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/961e99667864712859d2b236767caf05?_a=AQAEuj9",
-      "userId": 1733572060859,
+      "userId": "1733572060859",
       "likes": [],
       "favorites": [],
       "created_at": "2024-12-01T08:33:37.553Z"
@@ -121,7 +131,7 @@
       "category": "Programming",
       "description": "Modern web development emphasizes performance, making the choice of a front-end library crucial. React, a mature tool with a component-based architecture, is often used for building dynamic interfaces but can be slower due to its size. Million.js, a newer library by Aiden Bai, focuses on highly optimized rendering, reducing overhead, and using performant algorithms, making it ideal for performance-sensitive applications. ",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/847e431f5cea5655b08e01a35ff47605?_a=AQAEuiZ",
-      "userId": 1733572060859,
+      "userId": "1733572060859",
       "likes": [],
       "favorites": [],
       "created_at": "2024-12-01T08:34:25.306Z"
@@ -132,7 +142,7 @@
       "category": "International",
       "description": "Angular's ngComponentOutlet simplifies dynamic component loading, allowing developers to create flexible and reusable components. With the new input binding introduced in Angular 17, developers can now handle dynamic nested forms more efficiently without manually declaring injectors. Key benefits include faster development cycles, reduced bundle sizes, improved performance, scalability, and easier maintenance. ",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/b57530449daa2377dba81e56a9538bb7?_a=AQAEuiZ",
-      "userId": 1733572060859,
+      "userId": "1733572060859",
       "likes": [],
       "favorites": [],
       "created_at": "2024-12-01T16:13:19.207Z"
@@ -143,7 +153,7 @@
       "category": "Programming",
       "description": "The Angular team is exploring new authoring formats due to the time-consuming adaptation of TypeScript functionality in templates, which is not true TypeScript. At ng-Poland, this reasoning was clarified. The team also shared updates on introducing Signals into various parts of Angular, such as forms and the router.",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/4ba3f7b0878b9c3f92b0240405c26c8a?_a=AQAEuj9",
-      "userId": 1733572060859,
+      "userId": "1733572060859",
       "likes": [],
       "favorites": [],
       "created_at": "2024-12-02T11:16:43.971Z"
@@ -154,34 +164,67 @@
       "category": "Technology",
       "description": "The redesigned Structure tool window in IntelliJ IDEA now includes a Logical view that helps developers understand their codebase by showing framework-specific connections and dependencies. This enhancement leverages domain context providers to reveal intricate details of project structures, benefiting both AI assistants and human developers. The tool displays valuable insights for Spring Boot applications, including bean configurations, API endpoints, event publishers, and JPA entities.",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/b8834a8dc767ae6ad347a5ccee8771b9?_a=AQAEuj9",
-      "userId": 1733572060859,
+      "userId": "1733572060859",
       "likes": [],
       "favorites": [],
       "created_at": "2024-12-03T12:03:01.316Z"
     },
     {
-      "id": "1733581684639",
-      "title": "20 AI Coding Tools To Know in 2025",
-      "category": "News",
-      "description": "This post reviews 20 AI coding tools available as of 2025, including GitHub Copilot, Cursor, Replit, Hope AI, and more. These tools aim to enhance developer productivity, provide intelligent code suggestions, and automate numerous coding tasks. Special emphasis is placed on tools that create managed, reusable code components and offer organizational controls and analytics.",
-      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/bda075927e1dc5501fe85b7afd5155de?_a=AQAEuj9",
-      "userId": 1733579359717,
+      "id": "1734521971389",
+      "title": "Windows 11 vs. Ubuntu 24.10 Performance For Intel Core Ultra 7 Lunar Lake Review",
+      "category": "Technology",
+      "description": "Benchmarks comparing CPU and system performance of the ASUS Zenbook S 14 with Intel Core Ultra 7 256V under Windows 11 and Ubuntu 24.10 were conducted. The tests aimed to determine which operating system performs better on this Lunar Lake laptop, leveraging 4 P cores and 4 E cores with a maximum turbo frequency of 4.8GHz, and 16GB of LPDDR5X-8533 memory.",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/2c4d9495f7a0ee7089956d97d60385f5?_a=AQAEuiZ",
+      "userId": "1734337957632",
       "likes": [
         "1733572060859"
       ],
       "favorites": [
         "1733572060859"
       ],
-      "created_at": "2024-12-07T14:28:04.639Z"
+      "created_at": "2024-12-18T11:39:31.389Z"
+    },
+    {
+      "id": "1734597841692",
+      "title": "State Management in Angular Apps Using NgRx Signal Store",
+      "category": "Technology",
+      "description": "Learn how to manage state in Angular applications using the NgRx Signals library. This guide covers the development of a random number generator and a movie listing app, emphasizing both simple and complex state management. Key insights include the use of signalState() for component state and signalStore() for application-wide state, along with implementation details for handling immutable data, lifecycle hooks, and computed signals.",
+      "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/96117404539a379c13ddeb120b5a2593?_a=AQAEuiZ",
+      "userId": "1734597773416",
+      "likes": [],
+      "favorites": [],
+      "created_at": "2024-12-19T08:44:01.692Z"
+    },
+    {
+      "id": "1734598404300",
+      "title": "Pandas Is Dead. Machine Learning Teams Are Using These Tools Instead.",
+      "category": "News",
+      "description": "Pandas, a popular Python library for data manipulation, struggles with large datasets due to its single-core processing design. For faster data handling on single machines, alternatives like Polars, DuckDB, Vaex, and Modin are explored. These libraries leverage multi-core processing to significantly improve performance for tasks such as filtering, joining, and aggregation.",
+      "thumbnail": "https://i1.wp.com/miro.medium.com/v2/resize:fit:700/0*86uqWmWpyOGuiIA6?ssl=1",
+      "userId": "1734598272555",
+      "likes": [
+        "1733572060859"
+      ],
+      "favorites": [
+        "1733572060859"
+      ],
+      "created_at": "2024-12-19T08:53:24.300Z"
     }
   ],
   "comments": [
     {
       "id": "1734338195144",
       "postId": "1732782327290",
-      "userId": 1734337957632,
+      "userId": "1734337957632",
       "content": "JavaScript❤️",
       "created_at": "2024-12-16T08:36:35.144Z"
+    },
+    {
+      "id": "1734668101351",
+      "postId": "1734598404300",
+      "userId": "1733572060859",
+      "content": "Hello ",
+      "created_at": "2024-12-20T04:15:01.351Z"
     }
   ]
 }

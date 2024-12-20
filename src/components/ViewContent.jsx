@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "motion/react";
 import { useOutletContext, useParams } from "react-router-dom";
 import Comment from "./Comment";
 import { useAuth } from "./auth/AuthProvider";
-import { u } from "motion/react-client";
 
 const ViewContent = () => {
   const { setShowContentPopUp } = useOutletContext();
@@ -164,45 +163,37 @@ const ViewContent = () => {
   }, []);
 
   const followUser = async (currentUserId, targetUserId) => {
+    if (currentUser.following.includes(targetUserId)) return;
     const updateFollowing = [...(currentUser.following || []), targetUserId];
-    const updateFollowers = [...(ownerPostData.followers || []), currentUserId];
+    const updateFollowers = ownerPostData.followers.includes(currentUserId)
+      ? ownerPostData.followers
+      : [...(ownerPostData.followers || []), currentUserId];
     try {
-      const response1 = await fetch(
-        `http://localhost:3000/users/${currentUserId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ following: updateFollowing }),
-        }
-      );
-      if (!response1.ok) {
-        throw new Error("Failed to update following");
-      }
-    } catch (error) {
-      console.error("Error following user:", error);
-    }
-    try {
-      const response2 = await fetch(
-        `http://localhost:3000/users/${targetUserId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ followers: updateFollowers }),
-        }
-      );
-      if (!response2.ok) {
-        throw new Error("Failed to update followers");
-      }
+      await fetch(`http://localhost:3000/users/${currentUserId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ following: updateFollowing }),
+      });
+      await fetch(`http://localhost:3000/users/${targetUserId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ followers: updateFollowers }),
+      });
       setReRenderComments(!reRenderComments);
+      setCurrentUser((prev) => ({
+        ...prev,
+        following: updateFollowing,
+      }));
     } catch (error) {
       console.error("Error following user:", error);
     }
   };
   const unfollowUser = async (currentUserId, targetUserId) => {
+    if (!currentUser.following.includes(targetUserId)) return;
     const updateFollowing = currentUser.following.filter(
       (userId) => userId !== targetUserId
     );
@@ -210,33 +201,25 @@ const ViewContent = () => {
       (userId) => userId !== currentUserId
     );
     try {
-      const response1 = await fetch(
-        `http://localhost:3000/users/${currentUserId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ following: updateFollowing }),
-        }
-      );
-      if (!response1.ok) {
-        throw new Error("Failed to update following");
-      }
-      const response2 = await fetch(
-        `http://localhost:3000/users/${targetUserId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ followers: updateFollowers }),
-        }
-      );
-      if (!response2.ok) {
-        throw new Error("Failed to update followers");
-      }
+      await fetch(`http://localhost:3000/users/${currentUserId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ following: updateFollowing }),
+      });
+      await fetch(`http://localhost:3000/users/${targetUserId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ followers: updateFollowers }),
+      });
       setReRenderComments(!reRenderComments);
+      setCurrentUser((prev) => ({
+        ...prev,
+        following: updateFollowing,
+      }));
     } catch (error) {
       console.error("Error unfollowing user:", error);
     }

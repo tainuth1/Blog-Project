@@ -8,13 +8,14 @@ import { useAuth } from "../auth/AuthProvider";
 const CreatePost = () => {
   const { user } = useAuth();
   const initialize = {
-    id: Date.now(),
+    id: `${Date.now()}`,
     title: "",
     category: "",
     description: "",
     thumbnail: "",
-    userId: user.id,
+    userId: `${user.id}`,
     likes: [],
+    favorites: [],
     created_at: new Date().toISOString(),
   };
   const [imagePreview, setImagePreview] = useState("");

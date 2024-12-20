@@ -1,63 +1,138 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useAuth } from "../auth/AuthProvider";
+import Loading from "../Loading";
 
 const Following = () => {
   const { UserId } = useParams();
   const [following, setFollowing] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
+
   useEffect(() => {
-    const getFollowingData = async () => {
+    const fetchUserData = async () => {
       try {
         const response = await fetch(`http://localhost:3000/users/${UserId}`);
         if (!response.ok) {
-          throw new Error("Failed to fetch data from API");
+          throw new Error("Failed to fetch user data.");
         }
         const userData = await response.json();
-        const followingPromise = userData.followings.map(async (userId) => {
-          const getUser = await fetch(`http://localhost:3000/users/${userId}`);
-          if (!getUser.ok) {
-            throw new Error("Failed to fetch follower data from API");
+
+        const followingPromise = userData.following.map(async (userId) => {
+          const userResponse = await fetch(
+            `http://localhost:3000/users/${userId}`
+          );
+          if (!userResponse.ok) {
+            throw new Error("Failed to fetch following user data.");
           }
-          return getUser.json();
+          return userResponse.json();
         });
+
         const followingData = await Promise.all(followingPromise);
+
         setFollowing(followingData);
+        setCurrentUser(userData);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
-    getFollowingData();
+
+    fetchUserData();
   }, [UserId]);
+
+  const updateFollowingState = (targetUserId, isFollowing) => {
+    setCurrentUser((prev) => ({
+      ...prev,
+      following: isFollowing
+        ? prev.following.filter((id) => id !== targetUserId)
+        : [...prev.following, targetUserId],
+    }));
+  };
+
   return (
-    <div className="flex flex-col gap-5">
-      {following.map((user) => {
-        return <UserCard key={user.id} user={user} />;
-      })}
+    <div className="flex flex-col items-center gap-5">
+      {!currentUser ? (
+        <div className="mt-4">
+          <Loading />
+        </div>
+      ) : null}
+      {following.map((user) => (
+        <UserCard
+          key={user.id}
+          userData={user}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          updateFollowingState={updateFollowingState}
+        />
+      ))}
     </div>
   );
 };
 
-const UserCard = ({ user }) => {
+const UserCard = ({ userData, currentUser, updateFollowingState }) => {
+  const handleFollowButton = async () => {
+    const isFollowing = currentUser.following.includes(userData.id);
+
+    try {
+      const updatedFollowing = isFollowing
+        ? currentUser.following.filter((id) => id !== userData.id)
+        : [...currentUser.following, userData.id];
+
+      const updatedFollowers = isFollowing
+        ? userData.followers.filter((id) => id !== currentUser.id)
+        : userData.followers.includes(currentUser.id)
+        ? userData.followers
+        : [...userData.followers, currentUser.id];
+
+      await fetch(`http://localhost:3000/users/${currentUser.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ following: updatedFollowing }),
+      });
+
+      await fetch(`http://localhost:3000/users/${userData.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ followers: updatedFollowers }),
+      });
+
+      updateFollowingState(userData.id, isFollowing);
+    } catch (error) {
+      console.error("Error updating follow/unfollow:", error);
+    }
+  };
+
   return (
-    <div className="flex items-center justify-between">
+    <div className="w-full flex items-center justify-between">
       <div className="flex items-center gap-2">
         <Link
-          to={`/profile/${user.id}`}
+          to={`/profile/${userData.id}`}
           className="w-14 h-14 rounded-full overflow-hidden"
         >
           <img
-            src={user.profile}
-            alt=""
+            src={userData.profile}
+            alt={userData.nickname}
             className="w-full h-full object-cover"
           />
         </Link>
-        <div className="">
-          <h2 className="text-gray-700 text-lg font-medium">{user.nickname}</h2>
-          <p className="text-gray-500 text-sm">{user.username}</p>
+        <div>
+          <h2 className="text-gray-700 text-lg font-medium">
+            {userData.nickname}
+          </h2>
+          <p className="text-gray-500 text-sm">{userData.username}</p>
         </div>
       </div>
-      <button className="px-6 py-2 border-2 border-gray-300 text-gray-700 active:scale-[0.97] rounded-lg">
-        Unfollow
-      </button>
+      {currentUser.id !== userData.id && (
+        <button
+          onClick={handleFollowButton}
+          className={`px-6 py-2 border-2 ${
+            currentUser.following.includes(userData.id)
+              ? "border-red-500 text-red-600"
+              : "border-green-500 text-green-600"
+          } active:scale-[0.97] rounded-lg`}
+        >
+          {currentUser.following.includes(userData.id) ? "Unfollow" : "Follow"}
+        </button>
+      )}
     </div>
   );
 };

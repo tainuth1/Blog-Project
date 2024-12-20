@@ -91,7 +91,7 @@ const ProfileComponent = ({ userData, user, UserId, setShowEditProfile }) => {
   const tabs = [
     {
       id: "posts",
-      label: "My Posts",
+      label: "Posts",
       icon: "bxs-collection",
     },
     {
