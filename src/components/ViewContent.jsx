@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useOutletContext, useParams } from "react-router-dom";
 import Comment from "./Comment";
 import { useAuth } from "./auth/AuthProvider";
+import { u } from "motion/react-client";
 
 const ViewContent = () => {
   const { setShowContentPopUp } = useOutletContext();
@@ -10,6 +11,7 @@ const ViewContent = () => {
   const [showBlog, setShowBlog] = useState(null);
   const [commentValue, setCommentValue] = useState("");
   const { user } = useAuth();
+  const [currentUser, setCurrentUser] = useState({});
   const [comments, setComments] = useState([]);
   const [ownerPostData, setOwnerPostData] = useState({});
   const [reRenderComments, setReRenderComments] = useState(false);
@@ -147,6 +149,118 @@ const ViewContent = () => {
     };
     getData();
   }, [PostId, reRenderComments]);
+  useEffect(() => {
+    const getCurrentUserData = async () => {
+      const getCurrentUser = await fetch(
+        `http://localhost:3000/users/${user.id}`
+      );
+      if (!getCurrentUser.ok) {
+        throw new Error("Fail to fetch current user from api");
+      }
+      const currentUserData = await getCurrentUser.json();
+      setCurrentUser(currentUserData);
+    };
+    getCurrentUserData();
+  }, []);
+
+  const followUser = async (currentUserId, targetUserId) => {
+    const updateFollowing = [...(currentUser.following || []), targetUserId];
+    const updateFollowers = [...(ownerPostData.followers || []), currentUserId];
+    try {
+      const response1 = await fetch(
+        `http://localhost:3000/users/${currentUserId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ following: updateFollowing }),
+        }
+      );
+      if (!response1.ok) {
+        throw new Error("Failed to update following");
+      }
+    } catch (error) {
+      console.error("Error following user:", error);
+    }
+    try {
+      const response2 = await fetch(
+        `http://localhost:3000/users/${targetUserId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ followers: updateFollowers }),
+        }
+      );
+      if (!response2.ok) {
+        throw new Error("Failed to update followers");
+      }
+      setReRenderComments(!reRenderComments);
+    } catch (error) {
+      console.error("Error following user:", error);
+    }
+  };
+  const unfollowUser = async (currentUserId, targetUserId) => {
+    const updateFollowing = currentUser.following.filter(
+      (userId) => userId !== targetUserId
+    );
+    const updateFollowers = ownerPostData.followers.filter(
+      (userId) => userId !== currentUserId
+    );
+    try {
+      const response1 = await fetch(
+        `http://localhost:3000/users/${currentUserId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ following: updateFollowing }),
+        }
+      );
+      if (!response1.ok) {
+        throw new Error("Failed to update following");
+      }
+      const response2 = await fetch(
+        `http://localhost:3000/users/${targetUserId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ followers: updateFollowers }),
+        }
+      );
+      if (!response2.ok) {
+        throw new Error("Failed to update followers");
+      }
+      setReRenderComments(!reRenderComments);
+    } catch (error) {
+      console.error("Error unfollowing user:", error);
+    }
+  };
+  const followButton = () => {
+    const isFollowing = ownerPostData.followers.includes(user.id);
+    if (isFollowing) {
+      unfollowUser(user.id, ownerPostData.id);
+      setAlert(true);
+      setAlertMessage("Unfollowed");
+      setTimeout(() => {
+        setAlert(false);
+        setAlertMessage("");
+      }, 2500);
+    } else {
+      followUser(user.id, ownerPostData.id);
+      setAlert(true);
+      setAlertMessage("Following");
+      setTimeout(() => {
+        setAlert(false);
+        setAlertMessage("");
+      }, 2500);
+    }
+  };
 
   const { id, title, description, thumbnail, category } = showBlog
     ? showBlog
@@ -181,6 +295,20 @@ const ViewContent = () => {
               >
                 <i className="bx bx-x text-3xl "></i>
               </button>
+              <AnimatePresence>
+                {alert ? (
+                  <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    className="absolute left-[45%] px-5 py-2 text-white rounded-lg bg-[#212121] bg-opacity-80"
+                  >
+                    {alertMessage}
+                  </motion.div>
+                ) : (
+                  ""
+                )}
+              </AnimatePresence>
               <AnimatePresence>
                 {alert ? (
                   <motion.div
@@ -236,8 +364,13 @@ const ViewContent = () => {
                   </div>
                 </div>
                 {showBlog.userId != user.id ? (
-                  <button className="border-2 border-blue-600 px-6 py-2 rounded-lg text-blue-700 active:scale-[0.95]">
-                    Follow
+                  <button
+                    onClick={followButton}
+                    className="border-2 border-blue-600 px-6 py-2 rounded-lg text-blue-700 active:scale-[0.95]"
+                  >
+                    {ownerPostData.followers.includes(user.id)
+                      ? "Unfollow"
+                      : "Follow"}
                   </button>
                 ) : (
                   ""
