@@ -226,6 +226,7 @@ const ViewContent = () => {
   };
   const followButton = () => {
     const isFollowing = ownerPostData.followers.includes(user.id);
+    console.log(isFollowing);
     if (isFollowing) {
       unfollowUser(user.id, ownerPostData.id);
       setAlert(true);
@@ -394,7 +395,7 @@ const ViewContent = () => {
               <div className="w-full h-full">
                 <div className="">
                   <ul className="flex border-b border-gray-500">
-                    <li className="w-1/2 py-2 cursor-pointer text-center text-blue-600">
+                    <li className="w-1/2 py-2 border-b-2 border-blue-600 cursor-pointer text-center text-blue-600">
                       Comments
                     </li>
                     <li className="w-1/2 py-2 cursor-pointer text-center text-gray-700">

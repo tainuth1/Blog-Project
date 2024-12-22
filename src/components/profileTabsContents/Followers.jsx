@@ -92,6 +92,20 @@ const UserCard = ({ follower, userData, setUserData }) => {
       }
       const updatedUserData = await response.json();
       setUserData(updatedUserData);
+      const responseFollower = await fetch(`http://localhost:3000/users/${follower.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          followers: isFriend
+            ? follower.followers.filter((id) => id !== userData.id)
+            : [...follower.followers, userData.id],
+        }),
+      });
+      if (!responseFollower.ok) {
+        throw new Error("Failed to update follower data");
+      }
     } catch (error) {
       console.log(error);
     }

@@ -13,9 +13,9 @@
         "1734598272555"
       ],
       "following": [
-        "1734337957632",
+        "1734598272555",
         "1734597773416",
-        "1734598272555"
+        "1734337957632"
       ],
       "created_at": "2024-12-07T13:49:19.717Z"
     },
@@ -26,7 +26,9 @@
       "email": "nuth1@gmail.com",
       "password": "111111",
       "profile": "https://i1.sndcdn.com/avatars-000625811013-4mtr7o-t500x500.jpg",
-      "followers": [],
+      "followers": [
+        "1733572060859"
+      ],
       "following": [
         "1733572060859"
       ],
@@ -39,7 +41,9 @@
       "email": "nuth123@gmail.com",
       "password": "111111",
       "profile": "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg",
-      "followers": [],
+      "followers": [
+        "1733572060859"
+      ],
       "following": [
         "1733572060859"
       ],
@@ -52,7 +56,9 @@
       "email": "shroud@gmail.com",
       "password": "111111",
       "profile": "https://avatars.githubusercontent.com/u/148186087?v=4",
-      "followers": [],
+      "followers": [
+        "1733572060859"
+      ],
       "following": [
         "1733572060859"
       ],
@@ -224,11 +230,11 @@
       "created_at": "2024-12-16T08:36:35.144Z"
     },
     {
-      "id": "1734668101351",
-      "postId": "1734598404300",
+      "id": "1734853876600",
+      "postId": "1734521971389",
       "userId": "1733572060859",
-      "content": "Hello ",
-      "created_at": "2024-12-20T04:15:01.351Z"
+      "content": "Hello",
+      "created_at": "2024-12-22T07:51:16.600Z"
     }
   ]
 }
