@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import Loading from "../Loading";
 
 const Followers = () => {
   const { UserId } = useParams();
   const [followers, setFollower] = useState([]);
+  const [userData, setUserData] = useState(null);
   useEffect(() => {
     const getFollowerData = async () => {
       try {
@@ -27,18 +29,75 @@ const Followers = () => {
     };
     getFollowerData();
   }, [UserId]);
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/users/${UserId}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch data from API");
+        }
+        const userData = await response.json();
+        setUserData(userData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUserData();
+  }, [UserId]);
   return (
-    <div className="flex flex-col gap-5">
-      {followers.map((follower) => {
-        return <UserCard key={follower.id} follower={follower} />;
-      })}
+    <div className="flex flex-col items-center gap-5">
+      {!userData ? (
+        <div className="mt-4">
+          <Loading />
+        </div>
+      ) : (
+        followers.map((follower) => {
+          return (
+            <UserCard
+              key={follower.id}
+              follower={follower}
+              userData={userData}
+              setUserData={setUserData}
+            />
+          );
+        })
+      )}
     </div>
   );
 };
 
-const UserCard = ({ follower }) => {
+const UserCard = ({ follower, userData, setUserData }) => {
+  const isFriend =
+    userData.followers.includes(follower.id) &&
+    userData.following.includes(follower.id);
+
+  const followBack = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/users/${userData.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            following: isFriend
+              ? userData.following.filter((id) => id !== follower.id)
+              : [...userData.following, follower.id],
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to update user data");
+      }
+      const updatedUserData = await response.json();
+      setUserData(updatedUserData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <div className="flex items-center justify-between">
+    <div className="w-full flex items-center justify-between">
       <div className="flex items-center gap-2">
         <Link
           to={`/profile/${follower.id}`}
@@ -57,9 +116,23 @@ const UserCard = ({ follower }) => {
           <p className="text-gray-500 text-sm">{follower.username}</p>
         </div>
       </div>
-      <button className="px-6 py-2 border-2 border-gray-300 text-gray-700 active:scale-[0.97] rounded-lg">
-        Friend
-      </button>
+      <div className="flex gap-2">
+        <button
+          onClick={isFriend ? null : followBack}
+          className={`px-6 py-2 border-2 active:scale-[0.97] rounded-lg ${
+            isFriend
+              ? "border-green-500 text-green-600"
+              : "border-blue-500 text-blue-600"
+          }`}
+        >
+          {isFriend ? "Friend" : "Follow Back"}
+        </button>
+        {isFriend && (
+          <button className="border-2 py-2 px-3 rounded-lg border-blue-500 text-blue-600 active:scale-[0.97]">
+            <i className="bx bxs-chat"></i>
+          </button>
+        )}
+      </div>
     </div>
   );
 };
