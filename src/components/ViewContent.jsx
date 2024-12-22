@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useOutletContext, useParams } from "react-router-dom";
 import Comment from "./Comment";
 import { useAuth } from "./auth/AuthProvider";
+import CreatorPost from "./CreatorPost";
 
 const ViewContent = () => {
   const { setShowContentPopUp } = useOutletContext();
@@ -18,6 +19,7 @@ const ViewContent = () => {
   const [favorites, setFavorite] = useState();
   const [alert, setAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [activeTab, setActiveTab] = useState("comments");
 
   const closeModal = () => {
     setShowContentPopUp(false);
@@ -395,20 +397,34 @@ const ViewContent = () => {
               <div className="w-full h-full">
                 <div className="">
                   <ul className="flex border-b border-gray-500">
-                    <li className="w-1/2 py-2 border-b-2 border-blue-600 cursor-pointer text-center text-blue-600">
+                    <li
+                      onClick={() => setActiveTab("comments")}
+                      className={`w-1/2 py-2 border-b-2 cursor-pointer text-center ${
+                        activeTab === "comments"
+                          ? "text-blue-600 border-blue-600"
+                          : "text-gray-600 border-transparent"
+                      }`}
+                    >
                       Comments
                     </li>
-                    <li className="w-1/2 py-2 cursor-pointer text-center text-gray-700">
-                      Create Posts
+                    <li
+                      onClick={() => setActiveTab("creatorPosts")}
+                      className={`w-1/2 py-2 border-b-2 cursor-pointer text-center ${
+                        activeTab === "creatorPosts"
+                          ? "text-blue-600 border-blue-600"
+                          : "text-gray-600 border-transparent"
+                      }`}
+                    >
+                      Creator Posts
                     </li>
                   </ul>
                 </div>
                 <div className="w-full h-full pb-64 overflow-y-scroll flex flex-col mt-3 gap-4">
-                  {comments.length === 0 ? (
-                    <p className="text-center text-gray-600">No Comment</p>
-                  ) : (
-                    comments.map((comment) => {
-                      return (
+                  {activeTab === "comments" ? (
+                    comments.length === 0 ? (
+                      <p className="text-center text-gray-600">No Comment</p>
+                    ) : (
+                      comments.map((comment) => (
                         <Comment
                           key={comment.id}
                           comments={comment}
@@ -416,36 +432,40 @@ const ViewContent = () => {
                           setReRenderComments={setReRenderComments}
                           reRenderComments={reRenderComments}
                         />
-                      );
-                    })
-                  )}
+                      ))
+                    )
+                  ) : activeTab === "creatorPosts" ? (
+                    <CreatorPost ownerPostId={ownerPostData.id} />
+                  ) : null}
                 </div>
               </div>
-              <div className="absolute w-full bottom-[48px] z-[1]">
-                <form
-                  action=""
-                  className="w-full bg-white border-t-2 py-4 gap-2  flex items-center"
-                >
-                  <input
-                    type="text"
-                    name="comment"
-                    autoComplete="off"
-                    value={commentValue}
-                    onChange={(e) => setCommentValue(e.target.value)}
-                    placeholder="Add Comment"
-                    className="w-64 border px-4 py-2 text-sm text-gray-700 rounded-lg focus:outline-blue-600"
-                  />
-                  <button
-                    type="button"
-                    onClick={postComment}
-                    className={`text-sm px-3 font-semibold active:scale-[0.95]  ${
-                      commentValue ? "text-red-600" : "text-gray-700"
-                    }`}
+              {activeTab !== "creatorPosts" ? (
+                <div className="absolute w-full bottom-[48px] z-[1]">
+                  <form
+                    action=""
+                    className="w-full bg-white border-t-2 py-4 gap-2  flex items-center"
                   >
-                    Post
-                  </button>
-                </form>
-              </div>
+                    <input
+                      type="text"
+                      name="comment"
+                      autoComplete="off"
+                      value={commentValue}
+                      onChange={(e) => setCommentValue(e.target.value)}
+                      placeholder="Add Comment"
+                      className="w-64 border px-4 py-2 text-sm text-gray-700 rounded-lg focus:outline-blue-600"
+                    />
+                    <button
+                      type="button"
+                      onClick={postComment}
+                      className={`text-sm px-3 font-semibold active:scale-[0.95]  ${
+                        commentValue ? "text-red-600" : "text-gray-700"
+                      }`}
+                    >
+                      Post
+                    </button>
+                  </form>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

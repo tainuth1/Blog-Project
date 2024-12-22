@@ -5,6 +5,7 @@ import Loading from "../Loading";
 
 const Following = () => {
   const { UserId } = useParams();
+  const { user } = useAuth();
   const [following, setFollowing] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -55,10 +56,11 @@ const Following = () => {
           <Loading />
         </div>
       ) : null}
-      {following.map((user) => (
+      {following.map((userData) => (
         <UserCard
           key={user.id}
-          userData={user}
+          userData={userData}
+          user={user}
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
           updateFollowingState={updateFollowingState}
@@ -68,7 +70,7 @@ const Following = () => {
   );
 };
 
-const UserCard = ({ userData, currentUser, updateFollowingState }) => {
+const UserCard = ({ userData, currentUser, updateFollowingState, user }) => {
   const handleFollowButton = async () => {
     const isFollowing = currentUser.following.includes(userData.id);
 
@@ -121,7 +123,7 @@ const UserCard = ({ userData, currentUser, updateFollowingState }) => {
           <p className="text-gray-500 text-sm">{userData.username}</p>
         </div>
       </div>
-      {currentUser.id !== userData.id && (
+      {currentUser.id === user.id && (
         <button
           onClick={handleFollowButton}
           className={`px-6 py-2 border-2 ${
