@@ -14,8 +14,8 @@
       ],
       "following": [
         "1734337957632",
-        "1734597773416",
-        "1734598272555"
+        "1734598272555",
+        "1734597773416"
       ],
       "created_at": "2024-12-07T13:49:19.717Z"
     },
@@ -201,8 +201,12 @@
       "description": "Learn how to manage state in Angular applications using the NgRx Signals library. This guide covers the development of a random number generator and a movie listing app, emphasizing both simple and complex state management. Key insights include the use of signalState() for component state and signalStore() for application-wide state, along with implementation details for handling immutable data, lifecycle hooks, and computed signals.",
       "thumbnail": "https://media.daily.dev/image/upload/f_auto,q_auto/v1/posts/96117404539a379c13ddeb120b5a2593?_a=AQAEuiZ",
       "userId": "1734597773416",
-      "likes": [],
-      "favorites": [],
+      "likes": [
+        "1733572060859"
+      ],
+      "favorites": [
+        "1733572060859"
+      ],
       "created_at": "2024-12-19T08:44:01.692Z"
     },
     {
@@ -235,6 +239,15 @@
       "userId": "1733572060859",
       "content": "Hello",
       "created_at": "2024-12-22T07:51:16.600Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": "",
+      "senderId": "",
+      "receiverId": "",
+      "content": "",
+      "created_at": ""
     }
   ]
 }

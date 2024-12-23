@@ -13,6 +13,8 @@ import Register from "../auth/Register";
 import Loading from "../Loading";
 import Profile from "../pages/Profile";
 import EditProfile from "../EditProfile";
+import Message from "../pages/Message";
+import Chatting from "../chat/Chatting";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -47,6 +49,9 @@ const AppRouters = () => {
             <Route path="/create-post" element={<CreatePost />} />
             <Route path="/my-post" element={<MyPost />}>
               <Route path="edit/:EditId" element={<EditForm />} />
+            </Route>
+            <Route path="/message" element={<Message />} >
+              <Route path="chat/:ChatId" element={<Chatting />} />
             </Route>
             <Route path="/settings" element={<Settings />} />
             <Route path="/profile/:UserId" element={<Profile />}>

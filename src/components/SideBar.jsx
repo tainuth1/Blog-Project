@@ -46,6 +46,11 @@ const SideBar = () => {
             </NavLink>
           </li>
           <li className="w-full">
+            <NavLink to="/message" className={menuStyle}>
+            <i className='bx bxs-message-rounded text-xl'></i> Messages
+            </NavLink>
+          </li>
+          <li className="w-full">
             <NavLink to="/settings" className={menuStyle}>
               <i className="bx bxs-cog text-xl"></i> Settings
             </NavLink>
