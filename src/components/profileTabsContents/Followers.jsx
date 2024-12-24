@@ -142,9 +142,11 @@ const UserCard = ({ follower, userData, setUserData }) => {
           {isFriend ? "Friend" : "Follow Back"}
         </button>
         {isFriend && (
-          <button className="border-2 py-2 px-3 rounded-lg border-blue-500 text-blue-600 active:scale-[0.97]">
+          <Link
+          to={`/message/chat/${follower.id}`}
+          className="border-2 py-2 px-3 rounded-lg border-blue-500 text-blue-600 active:scale-[0.97]">
             <i className="bx bxs-chat"></i>
-          </button>
+          </Link>
         )}
       </div>
     </div>

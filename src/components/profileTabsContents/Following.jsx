@@ -58,7 +58,7 @@ const Following = () => {
       ) : null}
       {following.map((userData) => (
         <UserCard
-          key={user.id}
+          key={userData.id}
           userData={userData}
           user={user}
           currentUser={currentUser}

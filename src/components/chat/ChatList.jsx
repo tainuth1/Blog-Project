@@ -1,13 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../auth/AuthProvider";
+import UserList from "./UserList";
 
 const ChatList = () => {
+  const { user } = useAuth();
+  const [friends, setFriends] = useState([]);
+  const [currentUser, setCurrentUser] = useState();
+  const [loading, setLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  useEffect(() => {
+    const fetchFriends = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(`http://localhost:3000/users/${user.id}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data.");
+        }
+        const userData = await response.json();
+        setCurrentUser(userData);
+        const friendsPromise = userData.following.map(async (userId) => {
+          const userResponse = await fetch(
+            `http://localhost:3000/users/${userId}`
+          );
+          if (!userResponse.ok) {
+            throw new Error("Failed to fetch following user data.");
+          }
+          return userResponse.json();
+        });
+        const friendsData = await Promise.all(friendsPromise);
+        const friendsCanChatWithMe = friendsData.filter((friend) =>
+          friend.following.includes(user.id)
+        );
+        setFriends(friendsCanChatWithMe);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFriends();
+  }, []);
+
+  const filterUser = friends.filter((friend) =>
+    friend.nickname.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="w-ful h-full">
       <div className="relative mt-1 px-2">
         <input
           type="text"
           id="password"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           className="w-full pl-3 pr-10 py-2 border-2 border-gray-200 rounded-lg hover:border-gray-300 focus:outline-none focus:border-blue-500 transition-colors"
           placeholder="Search..."
         />
@@ -15,37 +61,18 @@ const ChatList = () => {
           <i className="bx bx-search-alt-2"></i>
         </button>
       </div>
-      <div className="h-[475px] border-t-2 flex flex-col gap-1 mt-2 overflow-y-scroll">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((chat) => {
-          return (
-            <Link
-              key={chat}
-              to={`/message/chat/${chat}`}
-              className="w-full flex justify-between hover:bg-gray-100 px-2 py-3 rounded-lg transition-colors"
-            >
-              <div className="flex items-start gap-2">
-                <div className="w-11 h-11 rounded-full overflow-hidden">
-                  <img
-                    src={
-                      "https://i.pinimg.com/736x/86/d5/2b/86d52b51acf85cb0b86c052ea2ae6e53.jpg"
-                    }
-                    alt=""
-                    className="w-full h-full object-cover rounded-full"
-                  />
-                </div>
-                <div className="flex flex-col w-[165px]">
-                  <h1 className="font-semibold text-sm text-gray-700">
-                    John Doe
-                  </h1>
-                  <p className="text-gray-500 text-[13px] line-clamp-1">
-                    Hello, how are you?
-                  </p>
-                </div>
-              </div>
-              <p className="text-[11px] text-gray-500">2 Days</p>
-            </Link>
-          );
-        })}
+      <div className="h-[475px] border-t-2 flex flex-col items-center gap-1 mt-2 overflow-y-scroll">
+        {loading ? (
+          <div className="flex flex-row gap-1 mt-4">
+            <div className="w-3 h-3 rounded-full bg-blue-700 animate-bounce"></div>
+            <div className="w-3 h-3 rounded-full bg-blue-700 animate-bounce [animation-delay:-.3s]"></div>
+            <div className="w-3 h-3 rounded-full bg-blue-700 animate-bounce [animation-delay:-.5s]"></div>
+          </div>
+        ) : (
+          filterUser.map((friend) => {
+            return <UserList key={friend.id} friend={friend} />;
+          })
+        )}
       </div>
     </div>
   );
